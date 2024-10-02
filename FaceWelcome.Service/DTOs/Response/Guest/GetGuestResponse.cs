@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceWelcome.Repository
+namespace FaceWelcome.Service.DTOs.Response.Guest
 {
-    public interface IUnitOfWork
+    internal class GetGuestResponse
     {
-        public void Commit();
-        public Task CommitAsync();
-
     }
 }

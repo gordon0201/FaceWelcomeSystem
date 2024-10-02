@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FaceWelcome.Repository\FaceWelcome.Repository.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Response\" />
+    <ProjectReference Include="..\FaceWelcome.Repository\FaceWelcome.Repository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceWelcome.Repository
+namespace FaceWelcome.Repository.Infrastructures
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -14,6 +14,8 @@ namespace FaceWelcome.Repository
         private FaceWelcomeContext _dbContext;
         private EventRepository _eventRepository;
         private OrganizationGroupRepository _organizationGroupRepository;
+        private GuestRepository _guestRepository;
+        private GuestImageRepository _guestImageRepository;
 
         public UnitOfWork(IDbFactory dbFactory)
         {
@@ -52,6 +54,29 @@ namespace FaceWelcome.Repository
                     _eventRepository = new EventRepository(_dbContext);
                 }
                 return _eventRepository;
+            }
+        }
+
+        public GuestRepository GuestRepository
+        {
+            get
+            {
+                if (_guestRepository == null)
+                {
+                    _guestRepository = new GuestRepository(_dbContext);
+                }
+                return _guestRepository;
+            }
+        }
+        public GuestImageRepository GuestImageRepository
+        {
+            get
+            {
+                if (_guestImageRepository == null)
+                {
+                    _guestImageRepository = new GuestImageRepository(_dbContext);
+                }
+                return _guestImageRepository;
             }
         }
 

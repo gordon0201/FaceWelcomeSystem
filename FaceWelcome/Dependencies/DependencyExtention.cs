@@ -1,4 +1,4 @@
-﻿using FaceWelcome.Repository;
+﻿using FaceWelcome.Repository.Infrastructures;
 using FaceWelcome.Service.Services.Implementations;
 using FaceWelcome.Service.Services.Interfaces;
 using Microsoft.OpenApi.Models;
@@ -23,6 +23,7 @@ namespace FaceWelcome.API.Dependencies
         {
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IOrganizationGroupService, OrganizationGroupService>();
+            services.AddScoped<IGuestService, GuestService>();
             return services;
         }
 

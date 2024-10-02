@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceWelcome.Repository
+namespace FaceWelcome.Repository.Infrastructures
 {
     public interface IDbFactory
     {

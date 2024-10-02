@@ -17,6 +17,12 @@
             public const string OrganizationGroupsEndpoint = ApiEndpoint + "/organizationGroups";  // Đảm bảo đường dẫn chính xác
             public const string OrganizationGroupEndpoint = OrganizationGroupsEndpoint + "/{id}";
         }
+
+        public static class Guest
+        {
+            public const string GuestsEndpoint = ApiEndpoint + "/guests";  // Đảm bảo đường dẫn chính xác
+            public const string GuestEndpoint = GuestsEndpoint + "/{id}";
+        }
     }
 }
 

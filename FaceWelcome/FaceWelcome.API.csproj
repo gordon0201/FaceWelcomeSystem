@@ -33,4 +33,8 @@
     <ProjectReference Include="..\FaceWelcome.Service\FaceWelcome.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

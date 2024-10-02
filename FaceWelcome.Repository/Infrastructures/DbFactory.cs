@@ -1,7 +1,6 @@
-﻿using FaceWelcome.Repository;
-using FaceWelcome.Repository.Models;
+﻿using FaceWelcome.Repository.Models;
 
-namespace FaceWelcome.API
+namespace FaceWelcome.Repository.Infrastructures
 {
     public class DbFactory : IDbFactory
     {
@@ -9,7 +8,7 @@ namespace FaceWelcome.API
 
         public FaceWelcomeContext InitDbContext()
         {
-            if(_dbContext == null)
+            if (_dbContext == null)
             {
                 _dbContext = new FaceWelcomeContext();
             }

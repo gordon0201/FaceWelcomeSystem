@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace FaceWelcome.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/organizationGroup")]
+    [Route("api/v1/organizationGroups")]
     public class OrganizationGroupController : Controller
     {
         private IOrganizationGroupService _organizationGroupService;

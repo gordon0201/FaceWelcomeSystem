@@ -1,0 +1,22 @@
+﻿namespace FaceWelcome.API.Constants
+{
+    public static class APIEndPointConstant
+    {
+        private const string RootEndPoint = "/api";
+        private const string ApiVersion = "/v1";
+        private const string ApiEndpoint = RootEndPoint + ApiVersion;
+
+        public static class Event
+        {
+            public const string EventsEndpoint = ApiEndpoint + "/events";  // Đảm bảo đường dẫn chính xác
+            public const string EventEndpoint = EventsEndpoint + "/{id}";
+        }
+
+        public static class OrganizationGroup
+        {
+            public const string OrganizationGroupsEndpoint = ApiEndpoint + "/organizationGroups";  // Đảm bảo đường dẫn chính xác
+            public const string OrganizationGroupEndpoint = OrganizationGroupsEndpoint + "/{id}";
+        }
+    }
+}
+

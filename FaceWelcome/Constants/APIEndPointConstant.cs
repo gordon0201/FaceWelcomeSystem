@@ -6,6 +6,11 @@
         private const string ApiVersion = "/v1";
         private const string ApiEndpoint = RootEndPoint + ApiVersion;
 
+        public static class Person
+        {
+            public const string PersonsEndpoint = ApiEndpoint + "/persons";
+            public const string PersonEndpoint = PersonsEndpoint + "/{id}";
+        }
         public static class Event
         {
             public const string EventsEndpoint = ApiEndpoint + "/events";  // Đảm bảo đường dẫn chính xác

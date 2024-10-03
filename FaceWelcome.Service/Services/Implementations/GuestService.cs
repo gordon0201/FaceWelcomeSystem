@@ -131,6 +131,22 @@ namespace FaceWelcome.Service.Services.Implementations
             };
         }
 
+        public async Task<GetGuestResponse> GetGuestByIdAsync(GuestRequest guestRequest)
+        {
+            // Lấy khách từ cơ sở dữ liệu thông qua GuestRepository theo ID
+            var guest = await _unitOfWork.GuestRepository.GetByIdAsync(guestRequest.Id);
 
+            // Nếu không tìm thấy khách, ném ra một ngoại lệ
+            if (guest == null)
+            {
+                throw new KeyNotFoundException($"Guest with ID {guestRequest.Id} not found");
+            }
+
+            // Sử dụng AutoMapper để ánh xạ khách sang GetGuestResponse DTO
+            var guestResponse = _mapper.Map<GetGuestResponse>(guest);
+
+            // Trả về GetGuestResponse đã được ánh xạ
+            return guestResponse;
+        }
     }
 }

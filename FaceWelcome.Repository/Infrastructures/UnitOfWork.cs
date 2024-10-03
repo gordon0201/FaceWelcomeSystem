@@ -1,4 +1,5 @@
-﻿using FaceWelcome.Repository.Models;
+﻿using FaceWelcome.Repository.FirebaseStorages.Repositories;
+using FaceWelcome.Repository.Models;
 using FaceWelcome.Repository.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace FaceWelcome.Repository.Infrastructures
         private GuestRepository _guestRepository;
         private GuestImageRepository _guestImageRepository;
         private OrganizationRepository _organizationRepository;
+        private FirebaseStorageRepository _firebaseStorageRepository;
 
         public UnitOfWork(IDbFactory dbFactory)
         {
@@ -92,6 +94,20 @@ namespace FaceWelcome.Repository.Infrastructures
                 return _guestImageRepository;
             }
         }
+
+        public FirebaseStorageRepository FirebaseStorageRepository
+        {
+            get
+            {
+                if (_firebaseStorageRepository == null)
+                {
+                    _firebaseStorageRepository = new FirebaseStorageRepository(_dbContext);
+                }
+                return _firebaseStorageRepository;
+            }
+        }
+
+
 
         // Thêm phương thức Dispose để giải phóng tài nguyên
         public void Dispose()

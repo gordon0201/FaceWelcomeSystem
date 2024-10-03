@@ -1,6 +1,8 @@
 ﻿using FaceWelcome.Repository.FirebaseStorages.Models;
+using FaceWelcome.Repository.Models;
 using Firebase.Auth;
 using Firebase.Storage;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -12,11 +14,13 @@ namespace FaceWelcome.Repository.FirebaseStorages.Repositories
 {
     public class FirebaseStorageRepository
     {
-        public FirebaseStorageRepository()
+        private FaceWelcomeContext _dbContext;
+        public FirebaseStorageRepository(FaceWelcomeContext dbContext)
         {
+            this._dbContext = dbContext;
         }
 
-        private FirebaseStorageModel GetFirebaseStorageProperties()
+        public FirebaseStorageModel GetFirebaseStorageProperties()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                                   .SetBasePath(Directory.GetCurrentDirectory())
@@ -31,7 +35,7 @@ namespace FaceWelcome.Repository.FirebaseStorages.Repositories
             };
         }
 
-        private async Task<FirebaseAuthLink> AuthenticateFirebaseAsync()
+        public async Task<FirebaseAuthLink> AuthenticateFirebaseAsync()
         {
             var firebaseStorage = GetFirebaseStorageProperties();
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig(firebaseStorage.ApiKey));
@@ -39,7 +43,7 @@ namespace FaceWelcome.Repository.FirebaseStorages.Repositories
             return auth;
         }
 
-        private async Task<string> UploadImageToFirebase(string localImagePath, string folder)
+        public async Task<string> UploadImageToFirebase(string localImagePath, string folder)
         {
             try
             {

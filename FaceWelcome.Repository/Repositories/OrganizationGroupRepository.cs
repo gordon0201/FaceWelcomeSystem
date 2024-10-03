@@ -16,6 +16,7 @@ namespace FaceWelcome.Repository.Repositories
             this._dbContext = dbContext;
         }
 
+
         // Thêm một nhóm tổ chức mới
         public async Task AddAsync(OrganizationGroup organizationGroup)
         {

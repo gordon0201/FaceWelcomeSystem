@@ -23,15 +23,13 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "FaceWelcome API", Version = "v1" });
 });
-builder.Services.AddDbFactory();
+builder.Services.AddDbFactory(); 
 builder.Services.AddUnitOfWork();
 builder.Services.AddServices();
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

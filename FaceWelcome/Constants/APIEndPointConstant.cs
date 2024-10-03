@@ -35,6 +35,12 @@
             public const string GuestImagesEndpoint = ApiEndpoint + "/guestImages";
             public const string GuestImageEndpoint = GuestImagesEndpoint + "/{id}";
         }
+
+        public static class Group
+        {
+            public const string GroupsEndpoint = ApiEndpoint + "/groups";
+            public const string GroupEndpoint = GroupsEndpoint + "/{id}";
+        }
     }
 }
 

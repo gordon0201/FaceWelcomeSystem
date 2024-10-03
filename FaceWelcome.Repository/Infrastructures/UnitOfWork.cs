@@ -18,8 +18,12 @@ namespace FaceWelcome.Repository.Infrastructures
         private GuestRepository _guestRepository;
         private GuestImageRepository _guestImageRepository;
         private OrganizationRepository _organizationRepository;
+        private StaffRepository _staffRepository;
+        private WelComeTemplateRepository _welcomeTemplateRepository;
+
         private FirebaseStorageRepository _firebaseStorageRepository;
         private GroupRepository _groupRepository;
+
 
         public UnitOfWork(IDbFactory dbFactory)
         {
@@ -46,6 +50,30 @@ namespace FaceWelcome.Repository.Infrastructures
                     _organizationRepository = new OrganizationRepository(_dbContext);
                 }
                 return _organizationRepository;
+            }
+        }
+
+        public StaffRepository StaffRepository
+        {
+            get
+            {
+                if (_staffRepository == null)
+                {
+                    _staffRepository = new StaffRepository(_dbContext);
+                }
+                return _staffRepository;
+            }
+        }
+
+        public WelComeTemplateRepository WelComeTemplateRepository
+        {
+            get
+            {
+                if (_welcomeTemplateRepository == null)
+                {
+                    _welcomeTemplateRepository = new WelComeTemplateRepository(_dbContext);
+                }
+                return _welcomeTemplateRepository;
             }
         }
 

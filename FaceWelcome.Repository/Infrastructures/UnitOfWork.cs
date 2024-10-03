@@ -16,6 +16,7 @@ namespace FaceWelcome.Repository.Infrastructures
         private OrganizationGroupRepository _organizationGroupRepository;
         private GuestRepository _guestRepository;
         private GuestImageRepository _guestImageRepository;
+        private OrganizationRepository _organizationRepository;
 
         public UnitOfWork(IDbFactory dbFactory)
         {
@@ -31,6 +32,18 @@ namespace FaceWelcome.Repository.Infrastructures
         public async Task CommitAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        public OrganizationRepository OrganizationRepository
+        {
+            get
+            {
+                if (_organizationRepository == null)
+                {
+                    _organizationRepository = new OrganizationRepository(_dbContext);
+                }
+                return _organizationRepository;
+            }
         }
 
         public OrganizationGroupRepository OrganizationGroupRepository

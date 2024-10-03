@@ -12,6 +12,12 @@
             public const string EventEndpoint = EventsEndpoint + "/{id}";
         }
 
+        public static class Organization
+        {
+            public const string OrganizationsEndpoint = ApiEndpoint + "/organizations";
+            public const string OrganizationEndpoint = OrganizationsEndpoint + "/{code}";
+        }
+
         public static class OrganizationGroup
         {
             public const string OrganizationGroupsEndpoint = ApiEndpoint + "/organizationGroups";  // Đảm bảo đường dẫn chính xác

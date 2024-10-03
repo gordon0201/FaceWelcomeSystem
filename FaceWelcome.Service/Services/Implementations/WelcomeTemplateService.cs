@@ -1,5 +1,4 @@
 ﻿using FaceWelcome.Repository.Infrastructures;
-using FaceWelcome.Service.DTOs.Request.Event;
 using FaceWelcome.Service.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,19 +8,15 @@ using System.Threading.Tasks;
 
 namespace FaceWelcome.Service.Services.Implementations
 {
-    public class EventService : IEventService
+    public class WelcomeTemplateService : IWelcomeTemplateService
     {
         private UnitOfWork _unitOfWork;
 
-        public EventService(IUnitOfWork unitOfWork)
+        public WelcomeTemplateService(IUnitOfWork unitOfWork)
 
         {
             this._unitOfWork = (UnitOfWork)unitOfWork;
         }
 
-        public async Task CreateEventAsync(PostEventRequest postEventRequest)
-        {
-
-        }
     }
 }

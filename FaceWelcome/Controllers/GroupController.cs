@@ -1,23 +1,21 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using FaceWelcome.API.Constants;
+using FaceWelcome.Service.DTOs.Request.Group;
+using FaceWelcome.Service.DTOs.Request.Guest;
 using FaceWelcome.Service.Services.Interfaces;
-using FaceWelcome.Service.DTOs.Request;
-using FaceWelcome.API.Constants;
+using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
 
 namespace FaceWelcome.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/events")]
-    public class EventsController : ControllerBase
+    public class GroupController : Controller
     {
-        private IEventService _eventService;
+        
+        private IGroupService _groupService;
 
-        public EventsController(IEventService eventService)
+        public GroupController(IGroupService groupService)
         {
-            this._eventService = eventService;
+            this._groupService = groupService;
         }
 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
@@ -25,26 +23,24 @@ namespace FaceWelcome.API.Controllers
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
         [Consumes(MediaTypeConstant.MultipartFormData)]
         [Produces(MediaTypeConstant.ApplicationJson)]
-        [HttpPost(APIEndPointConstant.Event.EventsEndpoint)]
-        public async Task<IActionResult> PostCreateEventAsync([FromForm] PostEventRequest postEventRequest)
+        [HttpPost(APIEndPointConstant.Group.GroupsEndpoint)]
+        public async Task<IActionResult> PostCreateGroupAsync([FromForm] PostGroupRequest postGroupRequest)
         {
-            if (postEventRequest == null)
+            if (postGroupRequest == null)
             {
                 return BadRequest("Invalid event data");
             }
 
             try
             {
-                await this._eventService.CreateEventAsync(postEventRequest);
-                return Ok();  
+                await this._groupService.CreateGroupAsync(postGroupRequest);
+                return Ok();  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
             }
             catch (Exception ex)
             {
+                // Trả về mã lỗi 500 nếu có lỗi trong quá trình tạo sự kiện
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
-
     }
-
 }

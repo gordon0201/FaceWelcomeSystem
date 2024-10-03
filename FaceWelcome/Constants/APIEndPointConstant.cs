@@ -34,6 +34,32 @@
             public const string GuestsEndpoint = ApiEndpoint + "/guests";  // Đảm bảo đường dẫn chính xác
             public const string GuestEndpoint = GuestsEndpoint + "/{id}";
         }
+
+
+        public static class Staff
+        {
+            public const string StaffsEndpoint = ApiEndpoint + "/staffs";
+            public const string StaffEndpoint = StaffsEndpoint + "/{id}";
+        }
+
+        public static class WelcomeTemplate
+        {
+            public const string welcomeTemplatesEndpoint = ApiEndpoint + "/welcomeTemplates";
+            public const string welcomeTemplateEndpoint = welcomeTemplatesEndpoint + "/{id}";
+
+        }
+        public static class GuestImage
+        {
+            public const string GuestImagesEndpoint = ApiEndpoint + "/guestImages";
+            public const string GuestImageEndpoint = GuestImagesEndpoint + "/{id}";
+        }
+
+        public static class Group
+        {
+            public const string GroupsEndpoint = ApiEndpoint + "/groups";
+            public const string GroupEndpoint = GroupsEndpoint + "/{id}";
+
+        }
     }
 }
 

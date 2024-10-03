@@ -1,4 +1,5 @@
-﻿using FaceWelcome.Repository.Models;
+﻿using FaceWelcome.Repository.FirebaseStorages.Repositories;
+using FaceWelcome.Repository.Models;
 using FaceWelcome.Repository.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,16 @@ namespace FaceWelcome.Repository.Infrastructures
         private GuestRepository _guestRepository;
         private GuestImageRepository _guestImageRepository;
         private OrganizationRepository _organizationRepository;
+
         private PersonRepository _personRepository;
+
+        private StaffRepository _staffRepository;
+        private WelComeTemplateRepository _welcomeTemplateRepository;
+
+        private FirebaseStorageRepository _firebaseStorageRepository;
+        private GroupRepository _groupRepository;
+
+
 
         public UnitOfWork(IDbFactory dbFactory)
         {
@@ -56,6 +66,30 @@ namespace FaceWelcome.Repository.Infrastructures
                     _organizationRepository = new OrganizationRepository(_dbContext);
                 }
                 return _organizationRepository;
+            }
+        }
+
+        public StaffRepository StaffRepository
+        {
+            get
+            {
+                if (_staffRepository == null)
+                {
+                    _staffRepository = new StaffRepository(_dbContext);
+                }
+                return _staffRepository;
+            }
+        }
+
+        public WelComeTemplateRepository WelComeTemplateRepository
+        {
+            get
+            {
+                if (_welcomeTemplateRepository == null)
+                {
+                    _welcomeTemplateRepository = new WelComeTemplateRepository(_dbContext);
+                }
+                return _welcomeTemplateRepository;
             }
         }
 
@@ -105,6 +139,32 @@ namespace FaceWelcome.Repository.Infrastructures
                 return _guestImageRepository;
             }
         }
+
+        public FirebaseStorageRepository FirebaseStorageRepository
+        {
+            get
+            {
+                if (_firebaseStorageRepository == null)
+                {
+                    _firebaseStorageRepository = new FirebaseStorageRepository(_dbContext);
+                }
+                return _firebaseStorageRepository;
+            }
+        }
+
+        public GroupRepository GroupRepository
+        {
+            get
+            {
+                if (_groupRepository == null)
+                {
+                    _groupRepository = new GroupRepository(_dbContext);
+                }
+                return _groupRepository;
+            }
+        }
+
+
 
         // Thêm phương thức Dispose để giải phóng tài nguyên
         public void Dispose()

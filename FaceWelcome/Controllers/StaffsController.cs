@@ -1,20 +1,25 @@
 ﻿using FaceWelcome.API.Constants;
-using FaceWelcome.Service.DTOs.Request;
 using FaceWelcome.Service.DTOs.Request.Organization;
+using FaceWelcome.Service.DTOs.Request.Staff;
+using FaceWelcome.Service.Services.Implementations;
 using FaceWelcome.Service.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FaceWelcome.API.Controllers
 {
+    
     [ApiController]
-    public class OrganizationController : Controller
-    {
-        private readonly IOrganizationService _organizationService;
+    [Route("api/v1/staffs")]
 
-        public OrganizationController(IOrganizationService organizationService)
+    public class StaffsController : Controller
+    {
+        private readonly IStaffService _staffService;
+
+        public StaffsController(IStaffService staffService)
         {
-            this._organizationService = organizationService;
+            _staffService = staffService;
         }
 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
@@ -22,16 +27,17 @@ namespace FaceWelcome.API.Controllers
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
         [Consumes(MediaTypeConstant.MultipartFormData)]
         [Produces(MediaTypeConstant.ApplicationJson)]
-        [HttpGet(APIEndPointConstant.Organization.OrganizationEndpoint)]
-        public async Task<IActionResult> GetOrganizationByCodeAsync([FromRoute] OrganizationCodeRequest organizationCodeRequest)
+        [HttpGet(APIEndPointConstant.Staff.StaffEndpoint)]
+        public async Task<IActionResult> GetStaffByIdAsync([FromRoute]StaffIdRequest staffIdRequest)
         {
-            if (organizationCodeRequest == null)
+
+            if (staffIdRequest == null)
             {
                 return BadRequest("Invalid data");
             }
             try
             {
-                var data =  await _organizationService.GetOrganizationByCodeAsync(organizationCodeRequest.Code);
+                var data = await _staffService.GetStaffByIdAsync(staffIdRequest.Id);
                 return Ok(data);
             }
             catch (Exception ex)

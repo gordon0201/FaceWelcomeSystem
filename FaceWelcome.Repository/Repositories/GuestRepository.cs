@@ -22,7 +22,6 @@ namespace FaceWelcome.Repository.Repositories
             await _dbContext.Guests.AddAsync(guest);
         }
 
-        // Lấy tất cả nhóm tổ chức
         public async Task<List<Guest>> GetAllAsync()
         {
             return await _dbContext.Guests
@@ -33,21 +32,22 @@ namespace FaceWelcome.Repository.Repositories
         }
 
 
-
-        // Lấy nhóm tổ chức theo ID
         public async Task<Guest> GetByIdAsync(Guid id)
         {
-            return await _dbContext.Guests.FindAsync(id);
+            return await _dbContext.Guests
+                .Include(g => g.Event)  
+                .Include(g => g.Group)  
+                .Include(g => g.Person)  
+                .FirstOrDefaultAsync(g => g.Id == id);
         }
 
-        // Cập nhật nhóm tổ chức
+
         public async Task UpdateAsync(Guest guest)
         {
             _dbContext.Guests.Update(guest);
             await _dbContext.SaveChangesAsync(); // Lưu thay đổi
         }
 
-        // Xóa nhóm tổ chức
         public async Task DeleteAsync(Guid id)
         {
             var guest = await GetByIdAsync(id);

@@ -1,6 +1,6 @@
 ﻿using FaceWelcome.Repository.Infrastructures;
 using FaceWelcome.Repository.Models;
-using FaceWelcome.Service.DTOs.Request;
+using FaceWelcome.Service.DTOs.Request.OrganizationGroup;
 using FaceWelcome.Service.Services.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceWelcome.Service.DTOs.Request
+namespace FaceWelcome.Service.DTOs.Request.OrganizationGroup
 {
     public class PostOrganizationGroupRequest
     {

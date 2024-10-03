@@ -9,6 +9,7 @@ namespace FaceWelcome.Repository.Models;
 
 public partial class FaceWelcomeContext : DbContext
 {
+
     public FaceWelcomeContext()
     {
 
@@ -48,11 +49,12 @@ public partial class FaceWelcomeContext : DbContext
         }
     }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Event>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Event__3214EC075BEB4BA6");
+            entity.HasKey(e => e.Id).HasName("PK__Event__3214EC0789BCC7EC");
 
             entity.ToTable("Event");
 
@@ -74,7 +76,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<Group>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Group__3214EC07EE12BA84");
+            entity.HasKey(e => e.Id).HasName("PK__Group__3214EC075EE07858");
 
             entity.ToTable("Group");
 
@@ -104,7 +106,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<Guest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Guest__3214EC0736B5D4FD");
+            entity.HasKey(e => e.Id).HasName("PK__Guest__3214EC07B6661F0C");
 
             entity.ToTable("Guest");
 
@@ -134,7 +136,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<GuestImage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__GuestIma__3214EC07D66BCA27");
+            entity.HasKey(e => e.Id).HasName("PK__GuestIma__3214EC07E4445EA5");
 
             entity.ToTable("GuestImage");
 
@@ -153,7 +155,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<Organization>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Organiza__3214EC074571C551");
+            entity.HasKey(e => e.Id).HasName("PK__Organiza__3214EC070DA302C0");
 
             entity.ToTable("Organization");
 
@@ -178,7 +180,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<OrganizationGroup>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Organiza__3214EC07EC635D7C");
+            entity.HasKey(e => e.Id).HasName("PK__Organiza__3214EC07A44BAF32");
 
             entity.ToTable("OrganizationGroup");
 
@@ -196,7 +198,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC077B139345");
+            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC0785DDA85A");
 
             entity.ToTable("Person");
 
@@ -222,7 +224,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<Staff>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Staff__3214EC07491E80DF");
+            entity.HasKey(e => e.Id).HasName("PK__Staff__3214EC079DA954CA");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
             entity.Property(e => e.Address).HasMaxLength(255);
@@ -245,7 +247,7 @@ public partial class FaceWelcomeContext : DbContext
 
         modelBuilder.Entity<WelcomeTemplate>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__WelcomeT__3214EC07A7693D80");
+            entity.HasKey(e => e.Id).HasName("PK__WelcomeT__3214EC07F22ADBB9");
 
             entity.ToTable("WelcomeTemplate");
 

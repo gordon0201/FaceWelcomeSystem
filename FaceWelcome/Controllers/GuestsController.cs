@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging;
 using FaceWelcome.API.Constants;
 using FaceWelcome.Service.DTOs.Request.Guest;
+using FaceWelcome.Service.DTOs.Response.Guest;
 using FaceWelcome.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,24 @@ namespace FaceWelcome.API.Controllers
             {
                 await this._guestService.UpdateGuestAsync(guestRequest.Id,updateGuestRequest);
                 return Ok();  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [ProducesResponseType(typeof(GetGuestsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.Guest.GuestsEndpoint)]
+        public async Task<IActionResult> GetBrandsAsync()
+        {
+            try
+            {
+                var data = await this._guestService.GetGuestsAsync();
+                return Ok(data);  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
             }
             catch (Exception ex)
             {

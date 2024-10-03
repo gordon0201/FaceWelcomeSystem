@@ -36,14 +36,15 @@ namespace FaceWelcome.API.Controllers
             try
             {
                 await this._eventService.CreateEventAsync(postEventRequest);
-                return Ok();  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
+                return Ok();  
             }
             catch (Exception ex)
             {
-                // Trả về mã lỗi 500 nếu có lỗi trong quá trình tạo sự kiện
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+
     }
 
 }

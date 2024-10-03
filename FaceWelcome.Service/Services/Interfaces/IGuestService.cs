@@ -15,8 +15,8 @@ namespace FaceWelcome.Service.Services.Interfaces
 
         public Task UpdateGuestAsync(Guid guestId, UpdateGuestRequest updateGuestRequest);
 
-        /*public Task<GetGuestsResponse> GetGuestsAsync();
+        public Task<GetGuestsResponse> GetGuestsAsync();
 
-        public Task<GetGuestResponse> GetGuestByIdAsync(int id);*/
+        /*public Task<GetGuestResponse> GetGuestByIdAsync(int id);*/
     }
 }

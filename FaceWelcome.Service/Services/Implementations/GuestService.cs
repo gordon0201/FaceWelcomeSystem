@@ -1,4 +1,5 @@
-﻿using FaceWelcome.Repository.Infrastructures;
+﻿using AutoMapper;
+using FaceWelcome.Repository.Infrastructures;
 using FaceWelcome.Repository.Models;
 using FaceWelcome.Service.DTOs.Request.Guest;
 using FaceWelcome.Service.DTOs.Response.Guest;
@@ -16,11 +17,13 @@ namespace FaceWelcome.Service.Services.Implementations
     public class GuestService : IGuestService
     {
         private UnitOfWork _unitOfWork;
+        private IMapper _mapper;
 
-        public GuestService(IUnitOfWork unitOfWork)
+        public GuestService(IUnitOfWork unitOfWork, IMapper mapper)
 
         {
             this._unitOfWork = (UnitOfWork)unitOfWork;
+            this._mapper = mapper;
         }
         public async Task CreateGuestAsync(PostGuestRequest postGuestRequest)
         {
@@ -35,7 +38,6 @@ namespace FaceWelcome.Service.Services.Implementations
             {
                 Code = postGuestRequest.code,
                 Type = postGuestRequest.type,
-                Image = postGuestRequest.image,
                 Status = postGuestRequest.status,
                 CheckInTime = postGuestRequest.checkInTime,
                 CheckOutTime = postGuestRequest.checkOutTime,
@@ -86,7 +88,6 @@ namespace FaceWelcome.Service.Services.Implementations
             // Cập nhật thông tin khách từ DTO
             guest.Code = updateGuestRequest.code;
             guest.Type = updateGuestRequest.type;
-            guest.Image = updateGuestRequest.image;
             guest.Status = updateGuestRequest.status;
             guest.CheckInTime = updateGuestRequest.checkInTime;
             guest.CheckOutTime = updateGuestRequest.checkOutTime;
@@ -102,11 +103,34 @@ namespace FaceWelcome.Service.Services.Implementations
         /*Task<GetGuestResponse> IGuestService.GetGuestByIdAsync(int id)
         {
             throw new NotImplementedException();
+        }*/
+
+        public async Task<GetGuestsResponse> GetGuestsAsync()
+        {
+            // Lấy danh sách tất cả khách từ cơ sở dữ liệu thông qua GuestRepository
+            var guests = await _unitOfWork.GuestRepository.GetAllAsync();
+
+            // Nếu không tìm thấy khách, trả về một response với danh sách rỗng
+            if (guests == null || !guests.Any())
+            {
+                return new GetGuestsResponse
+                {
+                    Guests = new List<GetGuestResponse>(),
+                    Message = "No guests found."
+                };
+            }
+
+            // Sử dụng AutoMapper để ánh xạ danh sách guests sang GetGuestResponse DTO
+            var guestResponses = _mapper.Map<List<GetGuestResponse>>(guests);
+
+            // Trả về GetGuestsResponse với danh sách khách đã được ánh xạ
+            return new GetGuestsResponse
+            {
+                Guests = guestResponses,
+                Message = "Guests retrieved successfully."
+            };
         }
 
-        Task<GetGuestsResponse> IGuestService.GetGuestsAsync()
-        {
-            throw new NotImplementedException();
-        }*/
+
     }
 }

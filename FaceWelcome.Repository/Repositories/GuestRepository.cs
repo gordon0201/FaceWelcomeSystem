@@ -23,10 +23,16 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Lấy tất cả nhóm tổ chức
-        public async Task<IEnumerable<Guest>> GetAllAsync()
+        public async Task<List<Guest>> GetAllAsync()
         {
-            return await _dbContext.Guests.ToListAsync();
+            return await _dbContext.Guests
+                .Include(g => g.Event) // Event might be null if not assigned
+                .Include(g => g.Group) // Group might be null if not assigned
+                .Include(g => g.Person) // Person might be null if not assigned
+                .ToListAsync();
         }
+
+
 
         // Lấy nhóm tổ chức theo ID
         public async Task<Guest> GetByIdAsync(Guid id)

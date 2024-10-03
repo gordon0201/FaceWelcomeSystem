@@ -26,6 +26,7 @@ namespace FaceWelcome.API.Dependencies
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IGuestImageService, GuestImageService>();
+            services.AddScoped<IGroupService, GroupService>();
             return services;
         }
 

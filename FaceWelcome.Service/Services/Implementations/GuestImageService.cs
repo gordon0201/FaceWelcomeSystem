@@ -12,7 +12,7 @@ namespace FaceWelcome.Service.Services.Implementations
 
         public GuestImageService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = (UnitOfWork)unitOfWork;
+            this._unitOfWork = (UnitOfWork)unitOfWork;
         }
 
         public async Task CreateGuestImageAsync(PostGuestImageRequest request)

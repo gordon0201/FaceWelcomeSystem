@@ -29,6 +29,12 @@
             public const string GuestsEndpoint = ApiEndpoint + "/guests";  // Đảm bảo đường dẫn chính xác
             public const string GuestEndpoint = GuestsEndpoint + "/{id}";
         }
+
+        public static class GuestImage
+        {
+            public const string GuestImagesEndpoint = ApiEndpoint + "/guestImages";
+            public const string GuestImageEndpoint = GuestImagesEndpoint + "/{id}";
+        }
     }
 }
 

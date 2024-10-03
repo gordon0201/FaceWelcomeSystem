@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FaceWelcome.Service.DTOs.Request
+namespace FaceWelcome.Service.DTOs.Request.Event
 {
     public class PostEventRequest
     {

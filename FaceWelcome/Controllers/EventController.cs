@@ -2,20 +2,20 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FaceWelcome.Service.Services.Interfaces;
-using FaceWelcome.Service.DTOs.Request;
 using FaceWelcome.API.Constants;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using FaceWelcome.Service.DTOs.Request.Event;
 
 
 namespace FaceWelcome.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/events")]
-    public class EventsController : ControllerBase
+
+    public class EventController : ControllerBase
     {
         private IEventService _eventService;
 
-        public EventsController(IEventService eventService)
+        public EventController(IEventService eventService)
         {
             this._eventService = eventService;
         }

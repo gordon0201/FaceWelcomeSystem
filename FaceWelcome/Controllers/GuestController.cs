@@ -11,7 +11,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace FaceWelcome.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/guests")]
     public class GuestsController : Controller
     {
         private IGuestService _guestService;
@@ -78,11 +77,29 @@ namespace FaceWelcome.API.Controllers
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
         [Produces(MediaTypeConstant.ApplicationJson)]
         [HttpGet(APIEndPointConstant.Guest.GuestsEndpoint)]
-        public async Task<IActionResult> GetBrandsAsync()
+        public async Task<IActionResult> GetGuestsAsync()
         {
             try
             {
                 var data = await this._guestService.GetGuestsAsync();
+                return Ok(data);  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [ProducesResponseType(typeof(GetGuestsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.Guest.GuestEndpoint)]
+        public async Task<IActionResult> GetGuestByIdAsync([FromRoute] GuestRequest guestRequest)
+        {
+            try
+            {
+                var data = await this._guestService.GetGuestByIdAsync(guestRequest);
                 return Ok(data);  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
             }
             catch (Exception ex)

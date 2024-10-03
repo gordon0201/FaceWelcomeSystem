@@ -1,5 +1,5 @@
 ﻿using FaceWelcome.Repository.Infrastructures;
-using FaceWelcome.Service.DTOs.Request;
+using FaceWelcome.Service.DTOs.Request.Event;
 using FaceWelcome.Service.Services.Interfaces;
 using System;
 using System.Collections.Generic;

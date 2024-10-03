@@ -1,5 +1,5 @@
 ﻿using FaceWelcome.API.Constants;
-using FaceWelcome.Service.DTOs.Request;
+using FaceWelcome.Service.DTOs.Request.OrganizationGroup;
 using FaceWelcome.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -7,7 +7,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace FaceWelcome.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/organizationGroups")]
     public class OrganizationGroupController : Controller
     {
         private IOrganizationGroupService _organizationGroupService;

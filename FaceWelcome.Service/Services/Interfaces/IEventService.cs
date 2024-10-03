@@ -1,4 +1,4 @@
-﻿using FaceWelcome.Service.DTOs.Request;
+﻿using FaceWelcome.Service.DTOs.Request.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;

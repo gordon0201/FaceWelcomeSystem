@@ -13,8 +13,6 @@ public partial class Guest
 
     public string Type { get; set; }
 
-    public string Image { get; set; }
-
     public string Status { get; set; }
 
     public DateTime? CheckInTime { get; set; }

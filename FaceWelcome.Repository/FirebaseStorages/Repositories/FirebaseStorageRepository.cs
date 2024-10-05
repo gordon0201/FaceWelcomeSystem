@@ -79,5 +79,40 @@ namespace FaceWelcome.Repository.FirebaseStorages.Repositories
                 throw new Exception(ex.Message, ex);
             }
         }
+
+        public async Task<bool> DeleteImageFromFirebase(string imageUrl)
+        {
+            try
+            {
+                var auth = await AuthenticateFirebaseAsync(); // Authenticate first
+                var firebaseStorageModel = GetFirebaseStorageProperties();
+
+                // Parse the file path from the image URL
+                Uri imageUri = new Uri(imageUrl);
+                string objectName = imageUri.AbsolutePath.Substring(1); // Remove the leading '/'
+
+                var firebaseStorage = new FirebaseStorage(
+                    firebaseStorageModel.Bucket,
+                    new FirebaseStorageOptions
+                    {
+                        AuthTokenAsyncFactory = () => Task.FromResult(auth.FirebaseToken),
+                        ThrowOnCancel = true
+                    });
+
+                // Delete the file from Firebase
+                await firebaseStorage
+                    .Child(objectName)
+                    .DeleteAsync();
+
+                // Optionally, remove the image reference from the database here if necessary
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error deleting image: {ex.Message}", ex);
+            }
+        }
+
     }
 }

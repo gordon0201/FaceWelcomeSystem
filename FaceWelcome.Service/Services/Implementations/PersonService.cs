@@ -24,9 +24,68 @@ namespace FaceWelcome.Service.Services.Implementations
             this._unitOfWork = (UnitOfWork)unitOfWork;
             this._mapper = mapper;
         }
+
+
+        #region Update person
+        public async Task UpdatePersonAsync(Guid id, UpdatePersonRequest updatePersonRequest)
+        {
+            string folderName = "persons";
+            var existedPerson = await _unitOfWork.PersonRepository.GetPersonByIdAsync(id);
+            if (existedPerson == null)
+            {
+                throw new Exception($"Person with ID {id} cannot be found.");
+            }
+            try
+            {
+                existedPerson.FullName = updatePersonRequest.FullName;
+                existedPerson.Address = updatePersonRequest.Address;
+                existedPerson.DateOfBirth = updatePersonRequest.DateOfBirth;
+                existedPerson.Gender = updatePersonRequest.Gender;
+                existedPerson.Email1 = updatePersonRequest.Email1;
+                existedPerson.Email2 = updatePersonRequest.Email2;
+                existedPerson.Phone = updatePersonRequest.Phone;
+                existedPerson.Position = updatePersonRequest.Position;
+
+                if (updatePersonRequest.Image != null)
+                {
+                    //Tạo tên file tạm thời
+                    var tempFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + Path.GetExtension(updatePersonRequest.Image.FileName));
+
+                    using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                    {
+                        await updatePersonRequest.Image.CopyToAsync(stream);
+                    }
+                    var imageUrl = await _unitOfWork.FirebaseStorageRepository.UploadImageToFirebase(tempFilePath, folderName);
+
+                    // xóa ảnh đã tồn tại trên Firebase nếu có
+                    if (!string.IsNullOrEmpty(existedPerson.Image))
+                    {
+                        await _unitOfWork.FirebaseStorageRepository.DeleteImageFromFirebase(existedPerson.Image);
+                    }
+                    existedPerson.Image = imageUrl;
+
+                    if (File.Exists(tempFilePath))
+                    {
+                        File.Delete(tempFilePath);
+                    }
+                }
+
+                await this._unitOfWork.PersonRepository.UpdatePersonAsync(existedPerson);
+                await this._unitOfWork.CommitAsync();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        #endregion
+
         #region Create Person
         public async Task CreatePersonAsync(PostPersonRequest postPersonRequest)
         {
+            string folderName = "persons";
             // Kiểm tra file có tồn tại không
             if (postPersonRequest.Image == null || postPersonRequest.Image.Length == 0)
             {
@@ -44,7 +103,7 @@ namespace FaceWelcome.Service.Services.Implementations
                 }
 
                 // Tải lên hình ảnh và lấy URL từ Firebase
-                string imageUrl = await _unitOfWork.FirebaseStorageRepository.UploadImageToFirebase(tempFilePath, "persons");
+                string imageUrl = await _unitOfWork.FirebaseStorageRepository.UploadImageToFirebase(tempFilePath, folderName);
 
                 //Tạo đối tượng Person
                 var person = new Person
@@ -98,6 +157,7 @@ namespace FaceWelcome.Service.Services.Implementations
         }
         #endregion
 
+        #region Get person by id
         public async Task<GetPersonResponse> GetPersonByIdAsync(Guid id)
         {
             try
@@ -115,7 +175,7 @@ namespace FaceWelcome.Service.Services.Implementations
                 throw new Exception(ex.Message);
             }
         }
-
+        #endregion
 
     }
 }

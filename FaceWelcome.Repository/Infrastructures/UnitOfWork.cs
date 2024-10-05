@@ -18,12 +18,9 @@ namespace FaceWelcome.Repository.Infrastructures
         private GuestRepository _guestRepository;
         private GuestImageRepository _guestImageRepository;
         private OrganizationRepository _organizationRepository;
-
         private PersonRepository _personRepository;
-
         private StaffRepository _staffRepository;
         private WelComeTemplateRepository _welcomeTemplateRepository;
-
         private FirebaseStorageRepository _firebaseStorageRepository;
         private GroupRepository _groupRepository;
 

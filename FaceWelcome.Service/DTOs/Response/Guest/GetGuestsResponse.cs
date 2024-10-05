@@ -4,6 +4,8 @@ namespace FaceWelcome.Service.DTOs.Response.Guest
 {
     public class GetGuestsResponse
     {
+
+
         // Danh sách các khách được trả về
         public List<GetGuestResponse> Guests { get; set; }
 

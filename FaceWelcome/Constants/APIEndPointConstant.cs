@@ -15,6 +15,7 @@
         {
             public const string EventsEndpoint = ApiEndpoint + "/events";  // Đảm bảo đường dẫn chính xác
             public const string EventEndpoint = EventsEndpoint + "/{id}";
+            public const string ListGuestsEndpoint = EventEndpoint + "guests";
         }
 
         public static class Organization

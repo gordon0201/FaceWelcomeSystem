@@ -17,6 +17,13 @@ namespace FaceWelcome.Repository.Repositories
             this._dbContext = dbContext;
         }
 
+        public async Task<List<Guest>> GetGuestsByEventIdAsync(Guid eventId)
+        {
+            return await _dbContext.Guests
+                .Where(g => g.EventId == eventId)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Guest guest)
         {
             await _dbContext.Guests.AddAsync(guest);

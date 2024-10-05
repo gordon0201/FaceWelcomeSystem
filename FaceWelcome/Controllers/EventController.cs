@@ -20,6 +20,31 @@ namespace FaceWelcome.API.Controllers
             this._eventService = eventService;
         }
 
+        #region Get Guests By Event Id
+
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.Event.ListGuestsEndpoint)]
+        public async Task<IActionResult> GetGuestsByEventIdAsync([FromRoute] EventIdRequest eventIdRequest)
+        {
+            try
+            {
+                var data = await _eventService.GetListGuestsByEventAsync(eventIdRequest.Id);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        #endregion
+
+
+
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]

@@ -20,6 +20,28 @@ namespace FaceWelcome.API.Controllers
             _personService = personService;
         }
 
+        #region Update Person
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpPut(APIEndPointConstant.Person.PersonEndpoint)]
+        public async Task<IActionResult> UpdatePersonAsync([FromRoute] PersonIdRepuest personIdRepuest, [FromForm] UpdatePersonRequest updatePersonRequest)
+        {
+            try
+            {
+                await this._personService.UpdatePersonAsync(personIdRepuest.Id, updatePersonRequest);
+                return Ok("Update Person successfully");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        #endregion
+
         #region Get People
         [ProducesResponseType(typeof(GetPersonResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]

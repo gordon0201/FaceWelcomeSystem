@@ -15,7 +15,17 @@ namespace FaceWelcome.Repository.Repositories
         {
             _dbContext = dbContext;
         }
-
+        public async Task UpdatePersonAsync(Person person)
+        {
+            try
+            {
+                this._dbContext.People.Update(person);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating person", ex);
+            }
+        }
         public async Task AddAsync(Person person)
         {
             try

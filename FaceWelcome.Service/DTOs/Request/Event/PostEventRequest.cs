@@ -1,19 +1,26 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FaceWelcome.Service.Enums;
 
 namespace FaceWelcome.Service.DTOs.Request.Event
 {
     public class PostEventRequest
     {
+        [Required(ErrorMessage = "Mã là bắt buộc.")]
+        public string Code { get; set; }
+
         [Required(ErrorMessage = "Tên sự kiện là bắt buộc.")]
         [StringLength(100, ErrorMessage = "Tên sự kiện không được vượt quá 100 ký tự.")]
         public string EventName { get; set; }
 
+        [Required(ErrorMessage = "Loại sự kiện là bắt buộc.")]
+        public EventEnum.Type Type { get; set; } // Sử dụng enum EventType
+
         [Required(ErrorMessage = "Thời gian bắt đầu là bắt buộc.")]
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
 
         [Required(ErrorMessage = "Thời gian kết thúc là bắt buộc.")]
-        public DateTime EndTime { get; set; }
+        public string EndTime { get; set; }
 
         [StringLength(500, ErrorMessage = "Mô tả không được vượt quá 500 ký tự.")]
         public string Description { get; set; }

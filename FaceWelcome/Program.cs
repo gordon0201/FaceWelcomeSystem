@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 
 
@@ -15,8 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(opts
-                    => opts.SuppressModelStateInvalidFilter = true);
+//builder.Services.AddControllers().ConfigureApiBehaviorOptions(opts
+//                    => opts.SuppressModelStateInvalidFilter = true);
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(opts => opts.SuppressModelStateInvalidFilter = true)
+    .AddJsonOptions(options =>
+    {
+        // Chuy?n ??i enum thành chu?i khi tr? v? JSON
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

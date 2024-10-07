@@ -27,6 +27,27 @@ namespace FaceWelcome.API.Controllers
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
         [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.WelcomeTemplate.WelcomeTemplateEndpoint)]
+        public async Task<IActionResult> GetTemplateByIdAsync([FromRoute]TemplateIdRequest templateIdRequest)
+        {
+            try
+            {
+                var data = await _welcomeTemplateService.GetTemplateByIdAsync(templateIdRequest.Id);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+        #endregion
+
+        #region Get All Templates
+        [ProducesResponseType(typeof(GetTemplateResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
         [HttpGet(APIEndPointConstant.WelcomeTemplate.WelcomeTemplatesEndpoint)]
         public async Task<IActionResult> GetAllTemplatesAsync([FromQuery] GetTemplatesRequest getTemplatesRequest)
         {

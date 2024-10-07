@@ -17,6 +17,7 @@ namespace FaceWelcome.Repository.Repositories
             this._dbContext = dbContext;
         }
 
+        #region Get all
         public async Task<List<WelcomeTemplate>> GetAllWelcomeTemplatesAsync()
         {
             try
@@ -31,5 +32,23 @@ namespace FaceWelcome.Repository.Repositories
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
+
+        #region Get template by id
+        public async Task<WelcomeTemplate> GetTemplateByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _dbContext.WelcomeTemplates
+                    .Include(wp => wp.Groups)
+                    .Include(wp => wp.Event)
+                    .SingleOrDefaultAsync(wp => wp.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
     }
 }

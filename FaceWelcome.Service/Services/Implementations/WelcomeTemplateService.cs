@@ -25,6 +25,26 @@ namespace FaceWelcome.Service.Services.Implementations
             this._mapper = mapper;
         }
 
+        #region Get Welcome Template By Id
+        public async Task<GetTemplateResponse> GetTemplateByIdAsync(Guid id)
+        {
+            try
+            {
+                var template = await _unitOfWork.WelComeTemplateRepository.GetTemplateByIdAsync(id);
+                if (template == null)
+                {
+                    throw new Exception("Template cannot found");
+                }
+                var templateResponse = this._mapper.Map<GetTemplateResponse>(template);
+                return templateResponse;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
         #region Get All WelcomeTemplates
         public async Task<GetTemplatesResponse> GetAllTemplatesAsync(GetTemplatesRequest getTemplatesRequest)
         {

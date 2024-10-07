@@ -31,6 +31,14 @@ namespace FaceWelcome.Service.DTOs.Response.Event
 
         public DateTime? CreatedAt { get; set; }
 
+        public int PageNumber { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int TotalRecords { get; set; }
+
+        public int TotalPages { get; set; }
+
         public List<GetGuestResponse> GuestList { get; set; } = new List<GetGuestResponse>();
     }
 }

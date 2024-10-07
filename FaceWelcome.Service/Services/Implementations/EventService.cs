@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FaceWelcome.Repository.Infrastructures;
 using FaceWelcome.Service.DTOs.Request.Event;
+using FaceWelcome.Service.DTOs.Request.Guest;
+using FaceWelcome.Service.DTOs.Request.Person;
 using FaceWelcome.Service.DTOs.Response.Event;
 using FaceWelcome.Service.DTOs.Response.Guest;
 using FaceWelcome.Service.Services.Interfaces;
@@ -29,7 +31,7 @@ namespace FaceWelcome.Service.Services.Implementations
 
         }
 
-        public async Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id)
+        public async Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id, GetGuestsRequest guestsRequest)
         {
             try
             {
@@ -39,8 +41,13 @@ namespace FaceWelcome.Service.Services.Implementations
                     throw new Exception(@"Event with {id} was not found");
                 }
                 var guestList = await _unitOfWork.GuestRepository.GetGuestsByEventIdAsync(id);
-                var guestListResponse =  this._mapper.Map<List<GetGuestResponse>>(guestList);
+                int totalRecords = guestList.Count;
+                int totalPages = (int)System.Math.Ceiling((double)totalRecords / guestsRequest.PageSize);
+                var list = guestList.Skip((guestsRequest.PageNumber - 1) * guestsRequest.PageSize)
+                    .Take(guestsRequest.PageSize)
+                    .ToList();
 
+                var guestListResponse = this._mapper.Map<List<GetGuestResponse>>(list);
 
                 var response = new GetListGuestsByEventResponse
                 {
@@ -55,7 +62,11 @@ namespace FaceWelcome.Service.Services.Implementations
                     Name = existedEvent.Name,
                     StartDate = existedEvent.StartDate,
                     Status = existedEvent.Status,
-                    Type = existedEvent.Type
+                    Type = existedEvent.Type,
+                    PageNumber = guestsRequest.PageNumber,
+                    TotalRecords = totalRecords,
+                    TotalPages = totalPages,
+                    PageSize = guestsRequest.PageSize
                 };
                 return response;
             }

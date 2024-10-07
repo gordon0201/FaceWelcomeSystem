@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using FaceWelcome.Repository.Models;
+using FaceWelcome.Service.DTOs.Response.Event;
 
 namespace FaceWelcome.Service.Profiles.Events
 {
@@ -12,7 +13,8 @@ namespace FaceWelcome.Service.Profiles.Events
     {
         public EventProfile()
         {
-            //CreateMap<Event, GetE>
+            // Cấu hình ánh xạ từ Event sang GetEventResponse
+            CreateMap<Event, GetEventResponse>();
         }
     }
 }

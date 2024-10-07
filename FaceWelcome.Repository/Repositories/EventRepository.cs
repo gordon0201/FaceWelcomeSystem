@@ -30,5 +30,19 @@ namespace FaceWelcome.Repository.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        #region Add event
+        public async Task AddAsync(Event eventRequest)
+        {
+            try
+            {
+                await _dbContext.Events.AddAsync(eventRequest);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
     }
 }

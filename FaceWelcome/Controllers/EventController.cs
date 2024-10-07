@@ -45,7 +45,7 @@ namespace FaceWelcome.API.Controllers
         #endregion
 
 
-
+        #region Create Event
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
@@ -69,6 +69,7 @@ namespace FaceWelcome.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        #endregion
 
 
     }

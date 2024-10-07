@@ -5,6 +5,7 @@ using FaceWelcome.Service.Services.Interfaces;
 using FaceWelcome.API.Constants;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using FaceWelcome.Service.DTOs.Request.Event;
+using FaceWelcome.Service.DTOs.Request.Guest;
 
 
 namespace FaceWelcome.API.Controllers
@@ -28,11 +29,11 @@ namespace FaceWelcome.API.Controllers
         [Consumes(MediaTypeConstant.MultipartFormData)]
         [Produces(MediaTypeConstant.ApplicationJson)]
         [HttpGet(APIEndPointConstant.Event.ListGuestsEndpoint)]
-        public async Task<IActionResult> GetGuestsByEventIdAsync([FromRoute] EventIdRequest eventIdRequest)
+        public async Task<IActionResult> GetGuestsByEventIdAsync([FromRoute] EventIdRequest eventIdRequest, [FromQuery] GetGuestsRequest guestsRequest)
         {
             try
             {
-                var data = await _eventService.GetListGuestsByEventAsync(eventIdRequest.Id);
+                var data = await _eventService.GetListGuestsByEventAsync(eventIdRequest.Id, guestsRequest);
                 return Ok(data);
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using FaceWelcome.Repository.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,21 @@ namespace FaceWelcome.Repository.Repositories
         public WelComeTemplateRepository(FaceWelcomeContext dbContext)
         {
             this._dbContext = dbContext;
+        }
+
+        public async Task<List<WelcomeTemplate>> GetAllWelcomeTemplatesAsync()
+        {
+            try
+            {
+                return await _dbContext.WelcomeTemplates
+                    .Include(wp => wp.Groups)
+                    .Include(wp => wp.Event)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

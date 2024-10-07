@@ -17,6 +17,8 @@ public partial class WelcomeTemplate
 
     public string Status { get; set; }
 
+    public string Image { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public Guid? EventId { get; set; }

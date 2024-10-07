@@ -15,7 +15,7 @@
         {
             public const string EventsEndpoint = ApiEndpoint + "/events";  // Đảm bảo đường dẫn chính xác
             public const string EventEndpoint = EventsEndpoint + "/{id}";
-            public const string ListGuestsEndpoint = EventEndpoint + "guests";
+            public const string ListGuestsEndpoint = EventEndpoint + "/guests";
         }
 
         public static class Organization
@@ -45,8 +45,8 @@
 
         public static class WelcomeTemplate
         {
-            public const string welcomeTemplatesEndpoint = ApiEndpoint + "/welcomeTemplates";
-            public const string welcomeTemplateEndpoint = welcomeTemplatesEndpoint + "/{id}";
+            public const string WelcomeTemplatesEndpoint = ApiEndpoint + "/welcomeTemplates";
+            public const string WelcomeTemplateEndpoint = WelcomeTemplatesEndpoint + "/{id}";
 
         }
         public static class GuestImage

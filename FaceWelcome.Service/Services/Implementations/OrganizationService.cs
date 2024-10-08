@@ -14,13 +14,13 @@ namespace FaceWelcome.Service.Services.Implementations
 {
     public class OrganizationService : IOrganizationService
     {
-        UnitOfWork _unitOfWork;
-        //private IMapper _mapper;
+        private UnitOfWork _unitOfWork;
+        private IMapper _mapper;
 
-        public OrganizationService(IUnitOfWork unitOfWork)
+        public OrganizationService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._unitOfWork = (UnitOfWork)unitOfWork;
-            //this._mapper = mapper;
+            this._mapper = mapper;
         }
 
         public async Task<Organization> GetOrganizationByCodeAsync(string code)
@@ -30,7 +30,7 @@ namespace FaceWelcome.Service.Services.Implementations
                 var organization = await _unitOfWork.OrganizationRepository.GetOrganizationByCodeAsync(code);
                 if (organization == null)
                 {
-                    throw new Exception("aaaaa");
+                    throw new Exception("The code is wrong or invalid");
                 }
                 return organization;
             }

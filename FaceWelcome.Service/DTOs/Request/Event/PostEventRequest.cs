@@ -1,27 +1,40 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FaceWelcome.Service.Enums;
 
 namespace FaceWelcome.Service.DTOs.Request.Event
 {
     public class PostEventRequest
     {
-        [Required(ErrorMessage = "Tên sự kiện là bắt buộc.")]
-        [StringLength(100, ErrorMessage = "Tên sự kiện không được vượt quá 100 ký tự.")]
+        [Required(ErrorMessage = "Code is required.")]
+        public string Code { get; set; }
+
+        [Required(ErrorMessage = "Event name is required.")]
+        [StringLength(100, ErrorMessage = "Event name must not exceed 100 characters.")]
         public string EventName { get; set; }
 
-        [Required(ErrorMessage = "Thời gian bắt đầu là bắt buộc.")]
-        public DateTime StartTime { get; set; }
+        [Required(ErrorMessage = "Event type is required.")]
+        public EventEnum.Type Type { get; set; } // Use enum EventType
 
-        [Required(ErrorMessage = "Thời gian kết thúc là bắt buộc.")]
-        public DateTime EndTime { get; set; }
+        [Required(ErrorMessage = "Guest number is required.")]
+        public int? GuestNumber { get; set; }
 
-        [StringLength(500, ErrorMessage = "Mô tả không được vượt quá 500 ký tự.")]
+        [Required(ErrorMessage = "Group number is required.")]
+        public int? GroupNumber { get; set; }
+
+        [Required(ErrorMessage = "Start time is required.")]
+        public string StartTime { get; set; }
+
+        [Required(ErrorMessage = "End time is required.")]
+        public string EndTime { get; set; }
+
+        [StringLength(500, ErrorMessage = "Description must not exceed 500 characters.")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Địa điểm là bắt buộc.")]
-        [StringLength(200, ErrorMessage = "Địa điểm không được vượt quá 200 ký tự.")]
+        [Required(ErrorMessage = "Location is required.")]
+        [StringLength(200, ErrorMessage = "Location must not exceed 200 characters.")]
         public string Location { get; set; }
 
-        // Có thể thêm các thuộc tính khác nếu cần
+        // Additional properties can be added if needed
     }
 }

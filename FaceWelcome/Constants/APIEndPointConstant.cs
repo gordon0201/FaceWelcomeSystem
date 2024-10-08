@@ -6,10 +6,16 @@
         private const string ApiVersion = "/v1";
         private const string ApiEndpoint = RootEndPoint + ApiVersion;
 
+        public static class Person
+        {
+            public const string PersonsEndpoint = ApiEndpoint + "/persons";
+            public const string PersonEndpoint = PersonsEndpoint + "/{id}";
+        }
         public static class Event
         {
             public const string EventsEndpoint = ApiEndpoint + "/events";  // Đảm bảo đường dẫn chính xác
             public const string EventEndpoint = EventsEndpoint + "/{id}";
+            public const string ListGuestsEndpoint = EventEndpoint + "/guests";
         }
 
         public static class Organization
@@ -30,7 +36,6 @@
             public const string GuestEndpoint = GuestsEndpoint + "/{id}";
         }
 
-
         public static class Staff
         {
             public const string StaffsEndpoint = ApiEndpoint + "/staffs";
@@ -39,9 +44,10 @@
 
         public static class WelcomeTemplate
         {
-            public const string welcomeTemplatesEndpoint = ApiEndpoint + "/welcomeTemplates";
-            public const string welcomeTemplateEndpoint = welcomeTemplatesEndpoint + "/{id}";
+            public const string WelcomeTemplatesEndpoint = ApiEndpoint + "/welcomeTemplates";
+            public const string WelcomeTemplateEndpoint = WelcomeTemplatesEndpoint + "/{id}";
         }
+      
         public static class GuestImage
         {
             public const string GuestImagesEndpoint = ApiEndpoint + "/guestImages";

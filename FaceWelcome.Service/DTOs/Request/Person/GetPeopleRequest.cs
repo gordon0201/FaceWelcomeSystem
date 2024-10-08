@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceWelcome.Service.DTOs.Request.Guest
+namespace FaceWelcome.Service.DTOs.Request.Person
 {
-    public class GetGuestsRequest
+    public class GetPeopleRequest
     {
-        public GetGuestsRequest() { }
-
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

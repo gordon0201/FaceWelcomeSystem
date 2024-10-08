@@ -5,6 +5,7 @@ using FaceWelcome.Service.Services.Interfaces;
 using FaceWelcome.API.Constants;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using FaceWelcome.Service.DTOs.Request.Event;
+using FaceWelcome.Service.DTOs.Request.Guest;
 
 
 namespace FaceWelcome.API.Controllers
@@ -20,6 +21,52 @@ namespace FaceWelcome.API.Controllers
             this._eventService = eventService;
         }
 
+        #region Get event by Id
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.Event.EventEndpoint)]
+        public async Task<IActionResult> GetEventByIdAsync([FromRoute] EventIdRequest eventIdRequest)
+        {
+            try
+            {
+                var data = await _eventService.GetEventByIdAsync(eventIdRequest.Id);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+        #endregion
+
+        #region Get Guests By Event Id
+
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.Event.ListGuestsEndpoint)]
+        public async Task<IActionResult> GetGuestsByEventIdAsync([FromRoute] EventIdRequest eventIdRequest, [FromQuery] GetGuestsRequest guestsRequest)
+        {
+            try
+            {
+                var data = await _eventService.GetListGuestsByEventAsync(eventIdRequest.Id, guestsRequest);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        #endregion
+
+
+        #region Create Event
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
@@ -36,13 +83,14 @@ namespace FaceWelcome.API.Controllers
             try
             {
                 await this._eventService.CreateEventAsync(postEventRequest);
-                return Ok();  
+                return Ok("Event created successfully.");  
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        #endregion
 
 
     }

@@ -21,7 +21,7 @@
         public static class Organization
         {
             public const string OrganizationsEndpoint = ApiEndpoint + "/organizations";
-            public const string OrganizationEndpoint = OrganizationsEndpoint + "/{code}";
+            public const string OrganizationEndpoint = OrganizationsEndpoint + "/{id}";
         }
 
         public static class OrganizationGroup

@@ -51,6 +51,7 @@ namespace FaceWelcome.Service.Services.Implementations
         }
         #endregion
 
+        #region Create event
         public async Task CreateEventAsync(PostEventRequest postEventRequest)
         {
             try
@@ -85,6 +86,7 @@ namespace FaceWelcome.Service.Services.Implementations
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
 
         #region Get list guests by eventId
         public async Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id, GetGuestsRequest guestsRequest)

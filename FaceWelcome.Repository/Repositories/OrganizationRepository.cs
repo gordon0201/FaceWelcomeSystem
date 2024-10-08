@@ -16,6 +16,53 @@ namespace FaceWelcome.Repository.Repositories
             this._dbContext = dbContext;
         }
 
+        #region Get by Id
+        public async Task<Organization> GetOrganizationByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _dbContext.Organizations
+                    .Include(org => org.OrganizationGroup)
+                    .SingleOrDefaultAsync(org => org.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Get all Organizations
+        public async Task<List<Organization>> GetOrganizationsAsync()
+        {
+            try
+            {
+                return await _dbContext.Organizations
+                    .Include(org => org.OrganizationGroup)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Create Organization
+        public async Task AddAsync(Organization organization)
+        {
+            try
+            {
+                _dbContext.Organizations.AddAsync(organization);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Get by Code
         public async Task<Organization> GetOrganizationByCodeAsync(string code)
         {
             try
@@ -27,5 +74,6 @@ namespace FaceWelcome.Repository.Repositories
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
     }
 }

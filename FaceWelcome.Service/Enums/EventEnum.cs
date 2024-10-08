@@ -10,11 +10,18 @@ namespace FaceWelcome.Service.Enums
     {
         public enum Type
         {
-            Conference,
-            Workshop,
-            Seminar,
-            Webinar,
-            SocialEvent
+            Conference,   // Hội nghị
+            Workshop,     // Hội thảo
+            Seminar,      // Chuyên đề
+            Webinar,      // Hội thảo trực tuyến
+            SocialEvent   // Sự kiện xã hội
+        }
+
+        public enum Status
+        {
+            ACTIVE,
+            INACTIVE,
+            DISABLE
         }
     }
 }

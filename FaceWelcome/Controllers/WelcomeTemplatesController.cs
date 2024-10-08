@@ -21,14 +21,14 @@ namespace FaceWelcome.API.Controllers
             _welcomeTemplateService = welcomeTemplateService;
         }
 
-        #region Get All Templates
+        #region Get Template by Id
         [ProducesResponseType(typeof(GetTemplateResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
         [Produces(MediaTypeConstant.ApplicationJson)]
         [HttpGet(APIEndPointConstant.WelcomeTemplate.WelcomeTemplateEndpoint)]
-        public async Task<IActionResult> GetTemplateByIdAsync([FromRoute]TemplateIdRequest templateIdRequest)
+        public async Task<IActionResult> GetTemplateByIdAsync([FromRoute] TemplateIdRequest templateIdRequest)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace FaceWelcome.API.Controllers
             {
                 throw new Exception(ex.Message);
             }
-            #endregion
         }
+        #endregion
     }
 }

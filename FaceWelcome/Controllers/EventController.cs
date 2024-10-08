@@ -43,7 +43,6 @@ namespace FaceWelcome.API.Controllers
         #endregion
 
         #region Get Guests By Event Id
-
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]

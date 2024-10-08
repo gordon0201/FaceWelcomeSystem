@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace FaceWelcome.Service.DTOs.Request.Organization
 {
-    public class GetOrganizationRequest
+    public class GetOrganizationsRequest
     {
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
     }
 }

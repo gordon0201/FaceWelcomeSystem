@@ -13,5 +13,7 @@ namespace FaceWelcome.Service.Services.Interfaces
     {
         public Task<GetTemplateResponse> GetTemplateByIdAsync(Guid templateId);
         public Task<GetTemplatesResponse> GetAllTemplatesAsync(GetTemplatesRequest getTemplatesRequest);
+
+        public Task CreateWelcomeTemplateAsync(PostTemplateRequest postTemplateRequest);
     }
 }

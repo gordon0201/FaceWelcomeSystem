@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using FaceWelcome.Repository.Infrastructures;
+using FaceWelcome.Repository.Models;
+using FaceWelcome.Repository.Repositories;
+using FaceWelcome.Service.DTOs.Request.Event;
 using FaceWelcome.Service.DTOs.Request.Person;
 using FaceWelcome.Service.DTOs.Request.WelcomeTemplate;
 using FaceWelcome.Service.DTOs.Response.Person;
@@ -7,6 +10,7 @@ using FaceWelcome.Service.DTOs.Response.WelcomeTemplate;
 using FaceWelcome.Service.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,6 +85,34 @@ namespace FaceWelcome.Service.Services.Implementations
 
         }
         #endregion
+
+
+        #region create a template
+        public async Task CreateWelcomeTemplateAsync(PostTemplateRequest postTemplateRequest)
+        {
+            if (postTemplateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(postTemplateRequest));
+            }
+
+            var welcomeTemplate = new WelcomeTemplate
+            {
+                Code = postTemplateRequest.Code,
+                Name = postTemplateRequest.Name,
+                Content = postTemplateRequest.Content,
+                Status = postTemplateRequest.Status,
+                Image = postTemplateRequest.Image,
+                CreatedAt =  DateTime.Now,
+                EventId = postTemplateRequest.EventId
+            };
+
+            await _unitOfWork.WelComeTemplateRepository.AddAsync(welcomeTemplate);
+
+            await _unitOfWork.CommitAsync();
+        }
+
+
+        #endregion create a teplate
 
     }
 }

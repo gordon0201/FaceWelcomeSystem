@@ -50,5 +50,18 @@ namespace FaceWelcome.Repository.Repositories
             }
         }
         #endregion
+
+        #region create a template
+
+        public async Task AddAsync(WelcomeTemplate welcomeTemplate)
+        {
+            if (welcomeTemplate == null)
+            {
+                throw new ArgumentNullException(nameof(welcomeTemplate), "welcomeTemplate cannot be null");
+            }
+
+            await _dbContext.WelcomeTemplates.AddAsync(welcomeTemplate);
+        }
+        #endregion create a template
     }
 }

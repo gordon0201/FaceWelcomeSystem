@@ -1,5 +1,6 @@
 ﻿using FaceWelcome.API.Constants;
 using FaceWelcome.Service.DTOs;
+using FaceWelcome.Service.DTOs.Request.Event;
 using FaceWelcome.Service.DTOs.Request.WelcomeTemplate;
 using FaceWelcome.Service.DTOs.Response.WelcomeTemplate;
 using FaceWelcome.Service.Services.Implementations;
@@ -62,5 +63,33 @@ namespace FaceWelcome.API.Controllers
             }
             #endregion
         }
+
+        #region Create Event
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpPost(APIEndPointConstant.WelcomeTemplate.WelcomeTemplatesEndpoint)]
+        public async Task<IActionResult> PostCreateWelcomeTemplateAsync([FromForm] PostTemplateRequest postTemplateRequest)
+        {
+            if (postTemplateRequest == null)
+            {
+                return BadRequest("Invalid template data");
+            }
+
+            try
+            {
+                await this._welcomeTemplateService.CreateWelcomeTemplateAsync(postTemplateRequest);
+                return Ok("Template created successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        #endregion
+
+
     }
 }

@@ -105,31 +105,45 @@ namespace FaceWelcome.Service.Services.Implementations
             throw new NotImplementedException();
         }*/
 
-        public async Task<GetGuestsResponse> GetGuestsAsync()
+        #region Get all guests
+        public async Task<GetGuestsResponse> GetAllGuestsAsync(GetAllGuestsRequest getAllGuestsRequest)
         {
             // Lấy danh sách tất cả khách từ cơ sở dữ liệu thông qua GuestRepository
             var guests = await _unitOfWork.GuestRepository.GetAllAsync();
 
-            // Nếu không tìm thấy khách, trả về một response với danh sách rỗng
+            // Kiểm tra xem có khách nào không
             if (guests == null || !guests.Any())
             {
-                return new GetGuestsResponse
-                {
-                    Guests = new List<GetGuestResponse>(),
-                    Message = "No guests found."
-                };
+                throw new Exception("No guests found.");
             }
 
-            // Sử dụng AutoMapper để ánh xạ danh sách guests sang GetGuestResponse DTO
-            var guestResponses = _mapper.Map<List<GetGuestResponse>>(guests);
+            // Tính tổng số bản ghi và số trang
+            int totalRecords = guests.Count;
+            int totalPages = (int)Math.Ceiling((double)totalRecords / getAllGuestsRequest.PageSize);
 
-            // Trả về GetGuestsResponse với danh sách khách đã được ánh xạ
-            return new GetGuestsResponse
+            // Phân trang cho danh sách Guests
+            var paginatedList = guests
+                .Skip((getAllGuestsRequest.PageNumber - 1) * getAllGuestsRequest.PageSize)
+                .Take(getAllGuestsRequest.PageSize)
+                .ToList();
+
+            // Sử dụng AutoMapper để ánh xạ danh sách guests sang GetGuestResponse DTO
+            var guestResponses = _mapper.Map<List<GetGuestResponse>>(paginatedList);
+
+            // Tạo đối tượng phản hồi chứa thông tin phân trang và danh sách Guests
+            var response = new GetGuestsResponse
             {
-                Guests = guestResponses,
-                Message = "Guests retrieved successfully."
+                PageSize = getAllGuestsRequest.PageSize,
+                TotalRecords = totalRecords,
+                TotalPages = totalPages,
+                PageNumber = getAllGuestsRequest.PageNumber,
+                Guests = guestResponses
             };
+
+            return response;
         }
+        #endregion
+
 
         public async Task<GetGuestResponse> GetGuestByIdAsync(GuestRequest guestRequest)
         {
@@ -148,5 +162,44 @@ namespace FaceWelcome.Service.Services.Implementations
             // Trả về GetGuestResponse đã được ánh xạ
             return guestResponse;
         }
+
+        #region Delete Guest
+        public async Task DeleteGuestAsync(Guid id)
+        {
+            // Lấy khách hiện tại từ cơ sở dữ liệu theo id
+            var existedGuest = await _unitOfWork.GuestRepository.GetByIdAsync(id);
+            if (existedGuest == null)
+            {
+                throw new Exception($"Guest with ID {id} cannot be found.");
+            }
+
+            // Kiểm tra ràng buộc khóa ngoại
+            if (existedGuest.GuestImages.Any())
+            {
+                throw new Exception($"Cannot delete guest with ID {id} because there are associated guest images.");
+            }
+
+            if (existedGuest.EventId.HasValue)
+            {
+                throw new Exception($"Cannot delete guest with ID {id} because they are associated with an event.");
+            }
+
+            if (existedGuest.GroupId.HasValue)
+            {
+                throw new Exception($"Cannot delete guest with ID {id} because they are associated with a group.");
+            }
+
+            try
+            {
+                await _unitOfWork.GuestRepository.DeleteGuestAsync(existedGuest);
+                await _unitOfWork.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting the guest: {ex.Message}");
+            }
+        }
+        #endregion
+
     }
 }

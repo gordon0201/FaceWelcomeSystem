@@ -145,7 +145,6 @@ namespace FaceWelcome.Service.Services.Implementations
             }
         }
         #endregion
-
         #region Delete Staff
         public async Task DeleteStaffAsync(Guid id)
         {
@@ -173,8 +172,6 @@ namespace FaceWelcome.Service.Services.Implementations
                 throw new Exception($"An error occurred while deleting the staff: {ex.Message}");
             }
         }
-
-
         #endregion
 
     }

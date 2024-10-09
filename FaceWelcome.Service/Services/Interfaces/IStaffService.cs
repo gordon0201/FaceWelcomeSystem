@@ -17,5 +17,7 @@ namespace FaceWelcome.Service.Services.Interfaces
         public Task UpdateStaffAsync(Guid id, UpdateStaffRequest updateStaffRequest);
         public Task PostStaffAsync(PostStaffRequest postStaffRequest);
         public Task<GetAllStaffsResponse> GetAllStaffsAsync(GetAllStaffsRequest getAllStaffsRequest);
+
+        public Task DeleteStaffAsync(Guid id);
     }
 }

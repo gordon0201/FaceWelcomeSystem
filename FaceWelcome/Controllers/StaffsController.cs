@@ -3,6 +3,7 @@ using FaceWelcome.Service.DTOs.Request.Organization;
 using FaceWelcome.Service.DTOs.Request.Person;
 using FaceWelcome.Service.DTOs.Request.Staff;
 using FaceWelcome.Service.DTOs.Response.Person;
+using FaceWelcome.Service.DTOs.Response.Staff;
 using FaceWelcome.Service.Services.Implementations;
 using FaceWelcome.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -93,7 +94,7 @@ namespace FaceWelcome.API.Controllers
         #endregion
 
         #region Get All Staffs
-        [ProducesResponseType(typeof(GetPersonResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetStaffResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
@@ -112,5 +113,26 @@ namespace FaceWelcome.API.Controllers
             }
         }
         #endregion
+
+        #region Delete Staff
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [HttpDelete(APIEndPointConstant.Staff.StaffEndpoint)]
+        public async Task<IActionResult> DeleteStaffAsync([FromRoute] StaffIdRequest staffIdRequest)
+        {
+            try
+            {
+                await _staffService.DeleteStaffAsync(staffIdRequest.Id);
+                return Ok("Staff deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        #endregion
+
     }
 }

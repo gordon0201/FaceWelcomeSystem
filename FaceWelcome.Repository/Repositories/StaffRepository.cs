@@ -64,5 +64,15 @@ namespace FaceWelcome.Repository.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task DeleteStaffAsync(Staff staff)
+        {
+            if (staff == null)
+            {
+                throw new ArgumentNullException(nameof(staff), "Staff cannot be null");
+            }
+
+            _dbContext.Staff.Remove(staff);
+        }
     }
 }

@@ -28,5 +28,41 @@ namespace FaceWelcome.Repository.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task UpdateStaffAsync(Staff staff)
+        {
+            try
+            {
+                this._dbContext.Staff.Update(staff);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating staff", ex);
+            }
+        }
+
+        public async Task AddAsync(Staff staff)
+        {
+            try
+            {
+                this._dbContext.Staff.AddAsync(staff);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<Staff>> GetAllStaffAsync()
+        {
+            try
+            {
+                return await _dbContext.Staff.Include(p => p.Event).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

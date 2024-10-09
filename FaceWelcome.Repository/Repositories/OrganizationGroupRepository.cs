@@ -24,33 +24,53 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Lấy tất cả nhóm tổ chức
-        public async Task<IEnumerable<OrganizationGroup>> GetAllAsync()
+        public async Task<List<OrganizationGroup>> GetAllOrganizationGroupsAsync()
         {
-            return await _dbContext.OrganizationGroups.ToListAsync();
+            try
+            {
+                return await _dbContext.OrganizationGroups.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // Lấy nhóm tổ chức theo ID
-        public async Task<OrganizationGroup> GetByIdAsync(int id)
+        public async Task<OrganizationGroup> GetOrganizationGroupByIdAsync(Guid id)
         {
-            return await _dbContext.OrganizationGroups.FindAsync(id);
+            try
+            {
+                return await this._dbContext.OrganizationGroups.SingleOrDefaultAsync(st => st.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // Cập nhật nhóm tổ chức
-        public async Task UpdateAsync(OrganizationGroup organizationGroup)
+        public async Task UpdateOrganizationGroupAsync(OrganizationGroup organizationGroup)
         {
-            _dbContext.OrganizationGroups.Update(organizationGroup);
-            await _dbContext.SaveChangesAsync(); // Lưu thay đổi
+            try
+            {
+                this._dbContext.OrganizationGroups.Update(organizationGroup);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating organizationGroup", ex);
+            }
         }
 
         // Xóa nhóm tổ chức
-        public async Task DeleteAsync(int id)
+        public async Task DeleteOrganizationGroupAsync(OrganizationGroup organizationGroup)
         {
-            var organizationGroup = await GetByIdAsync(id);
-            if (organizationGroup != null)
+            if (organizationGroup == null)
             {
-                _dbContext.OrganizationGroups.Remove(organizationGroup);
-                await _dbContext.SaveChangesAsync(); // Lưu thay đổi
+                throw new ArgumentNullException(nameof(organizationGroup), "Organization Group cannot be null");
             }
+
+            _dbContext.OrganizationGroups.Remove(organizationGroup);
         }
     }
 }

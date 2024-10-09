@@ -156,7 +156,6 @@ namespace FaceWelcome.Service.Services.Implementations
         }
         #endregion
 
-
         #region Update Guest Image
         public async Task UpdateGuestImageAsync(Guid id, UpdateGuestImageRequest updateGuestImageRequest)
         {

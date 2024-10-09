@@ -31,7 +31,7 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Method to get a GuestImage by ID
-        public async Task<GuestImage> GetByIdAsync(Guid id)
+        public async Task<GuestImage> GetGuestImageByIdAsync(Guid id)
         {
             return await _dbContext.GuestImages
                 .Include(gi => gi.Guest) // Include related Guest if necessary
@@ -39,20 +39,33 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Method to update a GuestImage
-        public async Task UpdateAsync(GuestImage guestImage)
+        public async Task UpdateGuestImageAsync(GuestImage guestImage)
         {
             _dbContext.GuestImages.Update(guestImage);
             await _dbContext.SaveChangesAsync(); // Save changes after updating
         }
 
         // Method to delete a GuestImage by ID
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteGuestImageAsync(GuestImage guestImage)
         {
-            var guestImage = await GetByIdAsync(id);
-            if (guestImage != null)
+            if (guestImage == null)
             {
-                _dbContext.GuestImages.Remove(guestImage);
-                await _dbContext.SaveChangesAsync(); // Save changes after deleting
+                throw new ArgumentNullException(nameof(guestImage), "Guest image cannot be null");
+            }
+
+            _dbContext.GuestImages.Remove(guestImage);
+        }
+
+
+        public async Task<List<GuestImage>> GetAllGuestImagesAsync()
+        {
+            try
+            {
+                return await _dbContext.GuestImages.Include(p => p.Guest).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

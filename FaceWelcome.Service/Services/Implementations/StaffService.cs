@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FaceWelcome.Repository.Infrastructures;
 using FaceWelcome.Repository.Models;
+using FaceWelcome.Repository.Repositories;
 using FaceWelcome.Service.DTOs.Request.Person;
 using FaceWelcome.Service.DTOs.Request.Staff;
 using FaceWelcome.Service.DTOs.Response.Staff;
@@ -143,6 +144,37 @@ namespace FaceWelcome.Service.Services.Implementations
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
+
+        #region Delete Staff
+        public async Task DeleteStaffAsync(Guid id)
+        {
+            // Lấy nhân viên hiện tại từ cơ sở dữ liệu theo id
+            var existedStaff = await _unitOfWork.StaffRepository.GetStaffByIdAsync(id);
+            if (existedStaff == null)
+            {
+                throw new Exception($"Staff with ID {id} cannot be found.");
+            }
+
+            // Kiểm tra xem nhân viên có thuộc về nhóm nào không
+            var groupsWithStaff = await _unitOfWork.GroupRepository.GetGroupsByStaffIdAsync(id);
+            if (groupsWithStaff.Any())
+            {
+                throw new Exception($"Cannot delete staff with ID {id} because they are associated with existing groups.");
+            }
+
+            try
+            {
+                await _unitOfWork.StaffRepository.DeleteStaffAsync(existedStaff);
+                await _unitOfWork.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting the staff: {ex.Message}");
+            }
+        }
+
+
         #endregion
 
     }

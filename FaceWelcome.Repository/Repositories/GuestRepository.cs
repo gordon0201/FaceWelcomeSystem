@@ -55,14 +55,14 @@ namespace FaceWelcome.Repository.Repositories
             await _dbContext.SaveChangesAsync(); // Lưu thay đổi
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteGuestAsync(Guest guest)
         {
-            var guest = await GetByIdAsync(id);
-            if (guest != null)
+            if (guest == null)
             {
-                _dbContext.Guests.Remove(guest);
-                await _dbContext.SaveChangesAsync(); // Lưu thay đổi
+                throw new ArgumentNullException(nameof(guest), "guest cannot be null");
             }
+
+            _dbContext.Guests.Remove(guest);
         }
 
     }

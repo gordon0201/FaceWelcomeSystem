@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace FaceWelcome.Service.DTOs.Request.Guest
 {
-    public class GetGuestsRequest
+    public class GetAllGuestsRequest
     {
-        public GetGuestsRequest() { }
-
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

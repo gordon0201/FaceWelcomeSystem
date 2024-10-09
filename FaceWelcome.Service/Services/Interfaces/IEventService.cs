@@ -12,7 +12,7 @@ namespace FaceWelcome.Service.Services.Interfaces
     public interface IEventService
     {
         public Task<GetEventResponse> GetEventByIdAsync(Guid id);
-        public Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id, GetGuestsRequest guestsRequest);
+        public Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id, GetAllGuestsRequest getAllGuestsRequest);
         public Task CreateEventAsync(PostEventRequest postEventRequest);
     }
 }

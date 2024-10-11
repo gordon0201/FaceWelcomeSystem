@@ -1,5 +1,6 @@
 ﻿using FaceWelcome.API.Constants;
 using FaceWelcome.Service.DTOs;
+using FaceWelcome.Service.DTOs.Request.Guest;
 using FaceWelcome.Service.DTOs.Request.WelcomeTemplate;
 using FaceWelcome.Service.DTOs.Response.WelcomeTemplate;
 using FaceWelcome.Service.Services.Implementations;
@@ -20,6 +21,27 @@ namespace FaceWelcome.API.Controllers
         {
             _welcomeTemplateService = welcomeTemplateService;
         }
+
+        #region Get Template by Guest Id
+        [ProducesResponseType(typeof(GetTemplateResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.WelcomeTemplate.GuestEndpoint)]
+        public async Task<IActionResult> GetTemplateByGuestIdAsync([FromRoute] GuestRequest guestRequest)
+        {
+            try
+            {
+                var data = await _welcomeTemplateService.GetTemplateByGuestIdAsync(guestRequest.Id);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
 
         #region Get Template by Id
         [ProducesResponseType(typeof(GetTemplateResponse), StatusCodes.Status200OK)]

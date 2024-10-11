@@ -32,7 +32,7 @@ namespace FaceWelcome.Service.Services.Implementations
             var organization = await _unitOfWork.OrganizationRepository
                 .GetOrganizationByCodeAsync(postOrganizationRequest.Code);
             var orgGroup = await _unitOfWork.OrganizationGroupRepository
-                .GetByIdAsync(postOrganizationRequest.OrganizationGroupId);
+                .GetOrganizationGroupByIdAsync(postOrganizationRequest.OrganizationGroupId);
             if (organization != null)
             {
                 throw new Exception("Code was existed.");

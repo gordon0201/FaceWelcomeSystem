@@ -35,7 +35,7 @@ namespace FaceWelcome.Repository.Repositories
         #endregion
 
         #region Get template by id
-        public async Task<WelcomeTemplate> GetTemplateByIdAsync(Guid id)
+        public async Task<WelcomeTemplate> GetTemplateByIdAsync(Guid? id)
         {
             try
             {

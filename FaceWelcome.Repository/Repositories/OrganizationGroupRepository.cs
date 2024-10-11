@@ -30,7 +30,7 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Lấy nhóm tổ chức theo ID
-        public async Task<OrganizationGroup> GetByIdAsync(int id)
+        public async Task<OrganizationGroup> GetByIdAsync(Guid id)
         {
             return await _dbContext.OrganizationGroups.FindAsync(id);
         }
@@ -43,7 +43,7 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Xóa nhóm tổ chức
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var organizationGroup = await GetByIdAsync(id);
             if (organizationGroup != null)

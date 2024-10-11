@@ -75,6 +75,7 @@ namespace FaceWelcome.Service.Services.Implementations
                     Type = postEventRequest.Type.ToString(),
                     GroupNumber = postEventRequest.GroupNumber,
                     GuestNumber = postEventRequest.GuestNumber,
+                    Status = postEventRequest.Status.ToString(),
                     
                 };
 

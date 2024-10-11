@@ -35,6 +35,9 @@ namespace FaceWelcome.Service.DTOs.Request.Event
         [StringLength(200, ErrorMessage = "Location must not exceed 200 characters.")]
         public string Location { get; set; }
 
+        [Required]
+        public EventEnum.Status Status { get; set; }
+
         // Additional properties can be added if needed
     }
 }

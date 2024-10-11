@@ -46,6 +46,7 @@
         {
             public const string WelcomeTemplatesEndpoint = ApiEndpoint + "/welcomeTemplates";
             public const string WelcomeTemplateEndpoint = WelcomeTemplatesEndpoint + "/{id}";
+            public const string GuestEndpoint = WelcomeTemplatesEndpoint + "/guest" + "/{id}";
         }
       
         public static class GuestImage

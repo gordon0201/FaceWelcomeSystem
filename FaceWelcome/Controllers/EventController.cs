@@ -61,7 +61,6 @@ namespace FaceWelcome.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
         #endregion
 
 

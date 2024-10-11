@@ -17,6 +17,7 @@ namespace FaceWelcome.API.Controllers
             this._organizationService = organizationService;
         }
 
+
         #region Get all organizations
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
@@ -55,6 +56,27 @@ namespace FaceWelcome.API.Controllers
             {
                 var data = await _organizationService.GetOrgByIdAsync(organizationIdRequest.Id);
                 return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Create organization
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpPost(APIEndPointConstant.Organization.OrganizationsEndpoint)]
+        public async Task<IActionResult> CreateOrganizationAsync([FromForm] PostOrganizationRequest postOrganizationRequest)
+        {
+            try
+            {
+                await this._organizationService.CreateOrganizationAsync(postOrganizationRequest);
+                return Ok("Organization created sucessfully.");
             }
             catch (Exception ex)
             {

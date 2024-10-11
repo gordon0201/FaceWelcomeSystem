@@ -37,7 +37,9 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Lấy nhóm tổ chức theo ID
+
         public async Task<OrganizationGroup> GetOrganizationGroupByIdAsync(Guid id)
+
         {
             try
             {
@@ -64,6 +66,7 @@ namespace FaceWelcome.Repository.Repositories
 
         // Xóa nhóm tổ chức
         public async Task DeleteOrganizationGroupAsync(OrganizationGroup organizationGroup)
+
         {
             if (organizationGroup == null)
             {

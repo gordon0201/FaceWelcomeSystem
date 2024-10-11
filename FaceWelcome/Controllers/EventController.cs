@@ -49,11 +49,11 @@ namespace FaceWelcome.API.Controllers
         [Consumes(MediaTypeConstant.MultipartFormData)]
         [Produces(MediaTypeConstant.ApplicationJson)]
         [HttpGet(APIEndPointConstant.Event.ListGuestsEndpoint)]
-        public async Task<IActionResult> GetGuestsByEventIdAsync([FromRoute] EventIdRequest eventIdRequest, [FromQuery] GetGuestsRequest guestsRequest)
+        public async Task<IActionResult> GetGuestsByEventIdAsync([FromRoute] EventIdRequest eventIdRequest, [FromQuery] GetAllGuestsRequest getAllGuestsRequest)
         {
             try
             {
-                var data = await _eventService.GetListGuestsByEventAsync(eventIdRequest.Id, guestsRequest);
+                var data = await _eventService.GetListGuestsByEventAsync(eventIdRequest.Id, getAllGuestsRequest);
                 return Ok(data);
             }
             catch (Exception ex)

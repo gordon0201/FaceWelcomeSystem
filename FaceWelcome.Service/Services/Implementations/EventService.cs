@@ -90,7 +90,7 @@ namespace FaceWelcome.Service.Services.Implementations
         #endregion
 
         #region Get list guests by eventId
-        public async Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id, GetGuestsRequest guestsRequest)
+        public async Task<GetListGuestsByEventResponse> GetListGuestsByEventAsync(Guid id, GetAllGuestsRequest getAllGuestsRequest)
         {
             try
             {
@@ -101,9 +101,9 @@ namespace FaceWelcome.Service.Services.Implementations
                 }
                 var guestList = await _unitOfWork.GuestRepository.GetGuestsByEventIdAsync(id);
                 int totalRecords = guestList.Count;
-                int totalPages = (int)System.Math.Ceiling((double)totalRecords / guestsRequest.PageSize);
-                var list = guestList.Skip((guestsRequest.PageNumber - 1) * guestsRequest.PageSize)
-                    .Take(guestsRequest.PageSize)
+                int totalPages = (int)System.Math.Ceiling((double)totalRecords / getAllGuestsRequest.PageSize);
+                var list = guestList.Skip((getAllGuestsRequest.PageNumber - 1) * getAllGuestsRequest.PageSize)
+                    .Take(getAllGuestsRequest.PageSize)
                     .ToList();
 
                 var guestListResponse = this._mapper.Map<List<GetGuestResponse>>(list);
@@ -122,10 +122,10 @@ namespace FaceWelcome.Service.Services.Implementations
                     StartDate = existedEvent.StartDate,
                     Status = existedEvent.Status,
                     Type = existedEvent.Type,
-                    PageNumber = guestsRequest.PageNumber,
+                    PageNumber = getAllGuestsRequest.PageNumber,
                     TotalRecords = totalRecords,
                     TotalPages = totalPages,
-                    PageSize = guestsRequest.PageSize
+                    PageSize = getAllGuestsRequest.PageSize
                 };
                 return response;
             }

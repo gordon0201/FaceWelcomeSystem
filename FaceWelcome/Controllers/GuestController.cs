@@ -2,6 +2,7 @@
 using FaceWelcome.API.Constants;
 using FaceWelcome.Service.DTOs.Request.Guest;
 using FaceWelcome.Service.DTOs.Response.Guest;
+using FaceWelcome.Service.Services.Implementations;
 using FaceWelcome.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace FaceWelcome.API.Controllers
         {
             this._guestService = guestService;
         }
-
+        #region Create Guest 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
@@ -44,9 +45,10 @@ namespace FaceWelcome.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        #endregion
 
 
-
+        #region update Guest 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
@@ -71,17 +73,19 @@ namespace FaceWelcome.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        #endregion
 
+        #region get all guests
         [ProducesResponseType(typeof(GetGuestsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
         [Produces(MediaTypeConstant.ApplicationJson)]
         [HttpGet(APIEndPointConstant.Guest.GuestsEndpoint)]
-        public async Task<IActionResult> GetGuestsAsync()
+        public async Task<IActionResult> GetAllGuestsAsync([FromQuery] GetAllGuestsRequest getAllGuestsRequest)
         {
             try
             {
-                var data = await this._guestService.GetGuestsAsync();
+                var data = await this._guestService.GetAllGuestsAsync(getAllGuestsRequest);
                 return Ok(data);  // Trả về HTTP 200 OK khi sự kiện được tạo thành công
             }
             catch (Exception ex)
@@ -89,7 +93,9 @@ namespace FaceWelcome.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        #endregion
 
+        #region get guest by id
         [ProducesResponseType(typeof(GetGuestsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
@@ -107,5 +113,32 @@ namespace FaceWelcome.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        #endregion
+
+        #region Delete Guest 
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [HttpDelete(APIEndPointConstant.Guest.GuestEndpoint)]
+        public async Task<IActionResult> DeleteGuestImageAsync([FromRoute] Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Invalid guest ID");
+            }
+
+            try
+            {
+                await _guestService.DeleteGuestAsync(id);
+                return Ok("Guest deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        #endregion
+
     }
 }

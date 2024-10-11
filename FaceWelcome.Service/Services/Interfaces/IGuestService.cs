@@ -1,4 +1,5 @@
 ﻿using FaceWelcome.Service.DTOs.Request.Guest;
+using FaceWelcome.Service.DTOs.Request.OrganizationGroup;
 using FaceWelcome.Service.DTOs.Response.Guest;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,10 @@ namespace FaceWelcome.Service.Services.Interfaces
 
         public Task UpdateGuestAsync(Guid guestId, UpdateGuestRequest updateGuestRequest);
 
-        public Task<GetGuestsResponse> GetGuestsAsync();
+        public Task<GetGuestsResponse> GetAllGuestsAsync(GetAllGuestsRequest getAllGuestsRequest);
 
         public Task<GetGuestResponse> GetGuestByIdAsync(GuestRequest guestRequest);
+
+        public Task DeleteGuestAsync(Guid id);
     }
 }

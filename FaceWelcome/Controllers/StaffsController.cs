@@ -1,6 +1,9 @@
 ﻿using FaceWelcome.API.Constants;
 using FaceWelcome.Service.DTOs.Request.Organization;
+using FaceWelcome.Service.DTOs.Request.Person;
 using FaceWelcome.Service.DTOs.Request.Staff;
+using FaceWelcome.Service.DTOs.Response.Person;
+using FaceWelcome.Service.DTOs.Response.Staff;
 using FaceWelcome.Service.Services.Implementations;
 using FaceWelcome.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +25,7 @@ namespace FaceWelcome.API.Controllers
             _staffService = staffService;
         }
 
+        #region Get Staff By Id
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
@@ -45,5 +49,90 @@ namespace FaceWelcome.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        #endregion
+
+        #region Update Staff
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpPut(APIEndPointConstant.Staff.StaffEndpoint)]
+        public async Task<IActionResult> UpdateStaffAsync([FromRoute] StaffIdRequest staffIdRequest, [FromForm] UpdateStaffRequest updateStaffRequest)
+        {
+            try
+            {
+                await this._staffService.UpdateStaffAsync(staffIdRequest.Id, updateStaffRequest);
+                return Ok("Update Person successfully");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Create Staff
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeConstant.MultipartFormData)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpPost(APIEndPointConstant.Staff.StaffsEndpoint)]
+        public async Task<IActionResult> PostStaffAsync([FromForm] PostStaffRequest postStaffRequest)
+        {
+            try
+            {
+                await _staffService.PostStaffAsync(postStaffRequest);
+                return Ok("Create new Staff successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+        #endregion
+
+        #region Get All Staffs
+        [ProducesResponseType(typeof(GetStaffResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [Produces(MediaTypeConstant.ApplicationJson)]
+        [HttpGet(APIEndPointConstant.Staff.StaffsEndpoint)]
+        public async Task<IActionResult> GetAllStaffsAsync([FromQuery] GetAllStaffsRequest getAllStaffsRequest)
+        {
+            try
+            {
+                var data = await _staffService.GetAllStaffsAsync(getAllStaffsRequest);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Delete Staff
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Error), StatusCodes.Status500InternalServerError)]
+        [HttpDelete(APIEndPointConstant.Staff.StaffEndpoint)]
+        public async Task<IActionResult> DeleteStaffAsync([FromRoute] StaffIdRequest staffIdRequest)
+        {
+            try
+            {
+                await _staffService.DeleteStaffAsync(staffIdRequest.Id);
+                return Ok("Staff deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        #endregion
+
     }
 }

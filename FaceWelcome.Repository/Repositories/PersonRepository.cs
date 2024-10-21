@@ -15,6 +15,12 @@ namespace FaceWelcome.Repository.Repositories
         {
             _dbContext = dbContext;
         }
+
+        public async Task<Person> GetPersonByPhone(string phoneNumber)
+        {
+            return await _dbContext.People.SingleOrDefaultAsync(p => p.Phone == phoneNumber);
+        }
+
         public async Task UpdatePersonAsync(Person person)
         {
             try
@@ -42,7 +48,9 @@ namespace FaceWelcome.Repository.Repositories
         {
             try
             {
-                return await _dbContext.People.Include(person => person.Organization).SingleOrDefaultAsync(p => p.Id == id);
+                return await _dbContext.People
+                    .Include(person => person.Organization)
+                    .SingleOrDefaultAsync(p => p.Id == id);
             }
             catch (Exception ex)
             {

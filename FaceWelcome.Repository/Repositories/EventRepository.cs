@@ -18,6 +18,23 @@ namespace FaceWelcome.Repository.Repositories
         }
 
 
+        public async Task<Event> GetEventByCodeAsync(string code)
+        {
+            try
+            {
+                return await _dbContext.Events
+                    .Include(e => e.Groups)
+                    .Include(e => e.Guests)
+                    .Include(e => e.Staff)
+                    .Include(e => e.WelcomeTemplates)
+                    .SingleOrDefaultAsync(e => e.Code == code);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(code, ex);
+            }
+        }
+
         public async Task<Event> GetEventByIdAsync(Guid id)
         {
             try

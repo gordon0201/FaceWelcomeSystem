@@ -26,6 +26,38 @@ namespace FaceWelcome.Service.Services.Implementations
             this._mapper = mapper;
         }
 
+        #region Create organization
+        public async Task CreateOrganizationAsync(PostOrganizationRequest postOrganizationRequest)
+        {
+            var organization = await _unitOfWork.OrganizationRepository
+                .GetOrganizationByCodeAsync(postOrganizationRequest.Code);
+            var orgGroup = await _unitOfWork.OrganizationGroupRepository
+                .GetOrganizationGroupByIdAsync(postOrganizationRequest.OrganizationGroupId);
+            if (organization != null)
+            {
+                throw new Exception("Code was existed.");
+            }
+            if (orgGroup == null)
+            {
+                throw new Exception("Cannot found the Organization Group");
+            }
+            var org = new Organization
+            {
+                City = postOrganizationRequest.City,
+                Code = postOrganizationRequest.Code,
+                District = postOrganizationRequest.District,
+                Email = postOrganizationRequest.Email,
+                Name = postOrganizationRequest.Name,
+                OrganizationGroupId = postOrganizationRequest.OrganizationGroupId,
+                Province = postOrganizationRequest.Province,
+                Status = postOrganizationRequest.Status.ToString(),
+            };
+            await _unitOfWork.OrganizationRepository.AddAsync(org);
+            await _unitOfWork.CommitAsync();
+
+        }
+        #endregion
+
         #region Get all organizations
         public async Task<GetOrgsResponse> GetAllOrganizations(GetOrganizationsRequest getOrganizationsRequest)
         {

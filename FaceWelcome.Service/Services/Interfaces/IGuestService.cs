@@ -12,6 +12,7 @@ namespace FaceWelcome.Service.Services.Interfaces
 {
     public interface IGuestService
     {
+      
         public Task CreateGuestAsync(PostGuestRequest postGuestRequest);
 
         public Task UpdateGuestAsync(Guid guestId, UpdateGuestRequest updateGuestRequest);

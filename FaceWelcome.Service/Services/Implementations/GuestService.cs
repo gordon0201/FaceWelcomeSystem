@@ -25,6 +25,9 @@ namespace FaceWelcome.Service.Services.Implementations
             this._unitOfWork = (UnitOfWork)unitOfWork;
             this._mapper = mapper;
         }
+
+       
+
         public async Task CreateGuestAsync(PostGuestRequest postGuestRequest)
         {
             // Check if the request object is null

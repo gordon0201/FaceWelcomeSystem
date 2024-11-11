@@ -11,6 +11,8 @@ namespace FaceWelcome.Service.Services.Interfaces
 {
     public interface IWelcomeTemplateService
     {
+        public Task<GetTemplateResponse> GetTemplateByPhoneNumberAndEventIdAsync(string phoneNumber, Guid eventId);
+        public Task<GetTemplateResponse> GetTemplateByGuestIdAsync(Guid guestId);
         public Task<GetTemplateResponse> GetTemplateByIdAsync(Guid templateId);
         public Task<GetTemplatesResponse> GetAllTemplatesAsync(GetTemplatesRequest getTemplatesRequest);
     }

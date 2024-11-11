@@ -17,6 +17,15 @@ namespace FaceWelcome.Repository.Repositories
             this._dbContext = dbContext;
         }
 
+
+        public async Task<Guest> GetGuestByEventIdAndPersonIdAsync(Guid eventId, Guid personId)
+        {
+            return await _dbContext.Guests
+                .Include(g => g.Event)
+                .Include(g => g.Person)
+                .SingleOrDefaultAsync(g => g.PersonId == personId && g.EventId == eventId);
+        }
+
         public async Task<List<Guest>> GetGuestsByEventIdAsync(Guid eventId)
         {
             return await _dbContext.Guests

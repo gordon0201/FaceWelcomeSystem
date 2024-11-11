@@ -14,8 +14,7 @@ namespace FaceWelcome.Service.Profiles.Organizations
         public OrganizationProfile()
         {
             CreateMap<Organization, GetOrgResponse>()
-                .ForMember(dest => dest.OrganizationGroupId, opt => opt
-                .MapFrom(src => src.OrganizationGroup != null ? src.OrganizationGroup.Id : (Guid?)null));
+                .ForMember(dest => dest.OrganizationGroupId, opt => opt.MapFrom(src => src.OrganizationGroup != null ? src.OrganizationGroup.Id : (Guid?)null));
         }
     }
 }

@@ -54,6 +54,12 @@ namespace FaceWelcome.Service.Services.Implementations
         #region Create event
         public async Task CreateEventAsync(PostEventRequest postEventRequest)
         {
+            var eventCode = await _unitOfWork.EventRepository.GetEventByCodeAsync(postEventRequest.Code);
+            if (eventCode != null)
+            {
+                throw new Exception("Code has been existed");
+            }
+
             try
             {
                 // Chuyển đổi chuỗi datetime sang DateTime với định dạng đã cho
@@ -75,6 +81,7 @@ namespace FaceWelcome.Service.Services.Implementations
                     Type = postEventRequest.Type.ToString(),
                     GroupNumber = postEventRequest.GroupNumber,
                     GuestNumber = postEventRequest.GuestNumber,
+                    Status = postEventRequest.Status.ToString(),
                     
                 };
 

@@ -41,11 +41,14 @@ namespace FaceWelcome.Repository.Repositories
         }
 
         // Lấy nhóm theo ID
-        public async Task<Group> GetGroupByIdAsync(Guid id)
+        public async Task<Group> GetGroupByIdAsync(Guid? id)
         {
             try
             {
-                return await this._dbContext.Groups.Include(e => e.Event).Include(s => s.Staff).Include(w => w.Staff).SingleOrDefaultAsync(g => g.Id == id);
+                return await this._dbContext.Groups
+                    .Include(e => e.Event)
+                    .Include(s => s.Staff).Include(w => w.Staff)
+                    .SingleOrDefaultAsync(g => g.Id == id);
             }
             catch (Exception ex)
             {
